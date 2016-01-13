@@ -1,0 +1,147 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newsContentView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wangyibg"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/teachcontent_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/news_content_head" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/show_writer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/showfood"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:src="@drawable/ic_launcher"
+                    android:scaleType="fitXY"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/showtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="奶香椰蓉面包棒"
+                    android:textSize="25dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/showdetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:text="奶香椰蓉面包棒发反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反复"
+                    android:textSize="15dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/show_writer_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_launcher"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/show_writer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="雪凝成了冰"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/show_writer_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="发布于:2015-11-05"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/show_fuliao_tishi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="食材明细"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/show_xian"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="1.0px"
+                android:background="@android:color/darker_gray"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/fuliao__listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/teachcontent_head"
+                android:divider="@color/black"
+                android:dividerHeight="1px" >
+            </ListView>
+
+            <TextView
+                android:id="@+id/show_content_tishi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="制作步骤"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/teachcontent__listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fuliao__listview"
+                android:divider="@color/black"
+                android:dividerHeight="1px" >
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/teachcontent__newsContentPro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/progressbar_large"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/teachcontent_reLoadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:src="@drawable/base_empty_view"
+        android:visibility="invisible" />
+
+</LinearLayout>
