@@ -42,7 +42,7 @@ public class Mysocket {
 				// TODO Auto-generated method stub
 				try {
 					Looper.prepare();
-					socket = new Socket("192.168.191.1",
+					socket = new Socket("192.168.1.106",
 							Integer.parseInt("8080"));
 					in = socket.getInputStream();
 					handler.sendEmptyMessage(2);

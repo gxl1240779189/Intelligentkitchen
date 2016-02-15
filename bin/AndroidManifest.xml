@@ -71,7 +71,7 @@
         </activity>
         <activity android:name="com.example.myactivity.searchjieguo" >
         </activity>
-        <activity android:name="com.example.myactivity.YaokongActivity" >
+        <activity android:name="com.example.myactivity.kaiguanshebeiActivity" >
         </activity>
           <activity android:name="com.example.myactivity.xiugaiziliao" >
         </activity>

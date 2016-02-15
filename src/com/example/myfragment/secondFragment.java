@@ -14,7 +14,7 @@ import com.example.httputil.CommonException;
 import com.example.httputil.NewsItem;
 import com.example.httputil.NewsItemBiz;
 import com.example.intelligentkitchenn.R;
-import com.example.myactivity.YaokongActivity;
+import com.example.myactivity.kaiguanshebeiActivity;
 import com.example.myapplication.myApplication;
 import com.example.myinterface.MysocketInterface;
 import com.example.netutil.NetUtil;
@@ -54,7 +54,7 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 		public void handleMessage(Message msg) {
 			if (msg.what == 1) {
 				String result = msg.getData().get("msg").toString();
-				Log.i("来自服务器的消息", "result");
+				Log.i("来自服务器的消息", result);
 			} else if (msg.what == 2) {
 				receiverThread = new Thread(new MyReceiverRunnable());
 				receiverThread.start();
@@ -74,7 +74,7 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.circle_menu, container, false);
-//		shezhi = (TextView) v.findViewById(R.id.yaokong_shezhi);
+//	   shezhi = (TextView) v.findViewById(R.id.yaokong_shezhi);
 		tixing = (ImageView) v.findViewById(R.id.yaokong_tixing);
 		mCircleMenuLayout = (roundmenu) v.findViewById(R.id.id_menulayout);
 		mCircleMenuLayout.setmenuitem_text_icon(mItemTexts, mItemImgs);
@@ -86,20 +86,44 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 						// TODO Auto-generated method stub
 						Toast.makeText(myApplication.GetContext(),
 								mItemTexts[pos], Toast.LENGTH_LONG).show();
-						// connectServer();
-						startActivity(new Intent(getActivity(),
-								YaokongActivity.class));
+						 
+						switch (pos) {
+						case 0:
+							
+							break;
+						case 1:
+							startActivity(new Intent(getActivity(),
+									kaiguanshebeiActivity.class));
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+						case 5:
+							break;
+						}
+						
 					}
 
 					@Override
 					public void onmenucentre(View view) {
 						// TODO Auto-generated method stub
-						Toast.makeText(myApplication.GetContext(), "centre",
-								Toast.LENGTH_LONG).show();
-						send("123456");
+//						Toast.makeText(myApplication.GetContext(), "centre",
+//								Toast.LENGTH_LONG).show();
+//						send("123456");
+						 if (Mysocket.getState() == 0) {
+						 connectServer();
+						 Toast.makeText(getActivity(), "wifi已连接!", Toast.LENGTH_SHORT)
+						 .show();
+						 } else {
+						 Toast.makeText(getActivity(), "当前wifi已经连接!", Toast.LENGTH_SHORT)
+						 .show();
+						 }
 					}
 				});
-//		shezhi.setOnClickListener(this);
+		// shezhi.setOnClickListener(this);
 		return v;
 	}
 
@@ -109,11 +133,12 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 			@Override
 			public void onsuccess(Socket socket) {
 				mysocket = socket;
+				
 			}
 
 			@Override
 			public void onfailued(Socket socket) {
-
+				
 			}
 		});
 
@@ -127,7 +152,7 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 				if (isConnected) {
 					if (mysocket != null && mysocket.isConnected()) {
 
-						String result = readFromInputStream(in);
+						String result = readFromInputStream(Mysocket.getIn());
 
 						try {
 							if (!result.equals("")) {
@@ -186,15 +211,15 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-//		case R.id.yaokong_shezhi:
-//			if (Mysocket.getState() == 0) {
-//				connectServer();
-//				tixing.setText("wifi已连接");
-//			} else {
-//				Toast.makeText(getActivity(), "当前wifi已经连接!", Toast.LENGTH_SHORT)
-//						.show();
-//			}
-//			break;
+		// case R.id.yaokong_shezhi:
+		// if (Mysocket.getState() == 0) {
+		// connectServer();
+		// tixing.setText("wifi已连接");
+		// } else {
+		// Toast.makeText(getActivity(), "当前wifi已经连接!", Toast.LENGTH_SHORT)
+		// .show();
+		// }
+		// break;
 
 		default:
 			break;
