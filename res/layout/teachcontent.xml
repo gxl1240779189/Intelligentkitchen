@@ -35,7 +35,8 @@
                     android:layout_height="350dp"
                     android:src="@drawable/ic_launcher"
                     android:scaleType="fitXY"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                     />
 
                 <TextView
                     android:id="@+id/showtitle"
@@ -44,7 +45,8 @@
                     android:gravity="center"
                     android:text="奶香椰蓉面包棒"
                     android:textSize="25dp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    />
 
                 <TextView
                     android:id="@+id/showdetail"
@@ -54,7 +56,8 @@
                     android:gravity="center_vertical"
                     android:text="奶香椰蓉面包棒发反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反复"
                     android:textSize="15dp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                     />
 
                 <ImageView
                     android:id="@+id/show_writer_image"
@@ -63,7 +66,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/ic_launcher"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    />
 
                 <TextView
                     android:id="@+id/show_writer_name"
@@ -71,7 +75,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="雪凝成了冰"
-                    android:visibility="gone" />
+                      android:visibility="gone"
+                     />
 
                 <TextView
                     android:id="@+id/show_writer_date"
@@ -79,7 +84,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="发布于:2015-11-05"
-                    android:visibility="gone" />
+                      android:visibility="gone"
+                    />
             </LinearLayout>
 
             <TextView

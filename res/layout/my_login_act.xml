@@ -115,19 +115,11 @@
         android:layout_alignParentBottom="true" 
         android:paddingTop="@dimen/big_space"
         android:paddingBottom="@dimen/big_space"
-        android:background="@drawable/special">
+        android:background="@drawable/special"
+        android:gravity="center_horizontal"
+        >
 
-        <TextView
-            android:id="@+id/login_by_weixin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/weixin_btn"
-            android:drawablePadding="@dimen/little_space"
-            android:gravity="center_vertical"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            android:text="微信登录"
-            android:textSize="@dimen/text_size_defalut" />
+   
         <TextView
             android:id="@+id/login_by_qq"
             android:layout_width="wrap_content"
@@ -139,7 +131,6 @@
             android:scaleY="0.7"
             android:text="QQ登录"
             android:textSize="@dimen/text_size_defalut" 
-            android:layout_toRightOf="@id/login_by_weixin"
             android:layout_marginLeft="35dp"/>
         
     </RelativeLayout>

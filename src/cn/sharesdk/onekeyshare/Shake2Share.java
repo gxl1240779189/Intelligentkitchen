@@ -71,15 +71,18 @@ public class Shake2Share extends FakeActivity implements SensorEventListener {
 	}
 
 	private void startSensor() {
-		mSensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
+		mSensorManager = (SensorManager) activity
+				.getSystemService(Context.SENSOR_SERVICE);
 		if (mSensorManager == null) {
 			throw new UnsupportedOperationException();
 		}
-		Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		Sensor sensor = mSensorManager
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		if (sensor == null) {
 			throw new UnsupportedOperationException();
 		}
-		boolean success = mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+		boolean success = mSensorManager.registerListener(this, sensor,
+				SensorManager.SENSOR_DELAY_GAME);
 		if (!success) {
 			throw new UnsupportedOperationException();
 		}
@@ -100,14 +103,16 @@ public class Shake2Share extends FakeActivity implements SensorEventListener {
 		long currentTime = System.currentTimeMillis();
 		long diffTime = currentTime - mLastUpdateTime;
 		if (diffTime > UPDATE_INTERVAL) {
-			if(mLastUpdateTime != 0) {
+			if (mLastUpdateTime != 0) {
 				float x = event.values[0];
 				float y = event.values[1];
 				float z = event.values[2];
 				float deltaX = x - mLastX;
 				float deltaY = y - mLastY;
 				float deltaZ = z - mLastZ;
-				float delta = (float)Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) / diffTime * 10000;
+				float delta = (float) Math.sqrt(deltaX * deltaX + deltaY
+						* deltaY + deltaZ * deltaZ)
+						/ diffTime * 10000;
 				if (delta > SHAKE_THRESHOLD) {
 					if (!shaken) {
 						shaken = true;

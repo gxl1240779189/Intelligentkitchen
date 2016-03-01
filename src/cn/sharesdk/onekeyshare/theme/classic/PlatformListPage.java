@@ -26,7 +26,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import cn.sharesdk.onekeyshare.PlatformListFakeActivity;
 
-public class PlatformListPage extends PlatformListFakeActivity implements View.OnClickListener {
+public class PlatformListPage extends PlatformListFakeActivity implements
+		View.OnClickListener {
 	// page container
 	private FrameLayout flPage;
 	// gridview of platform list
@@ -74,7 +75,8 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 		llPage.setOrientation(LinearLayout.VERTICAL);
 		llPage.setBackgroundDrawable(new ColorDrawable(0xffffffff));
 		FrameLayout.LayoutParams lpLl = new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+				FrameLayout.LayoutParams.MATCH_PARENT,
+				FrameLayout.LayoutParams.WRAP_CONTENT);
 		lpLl.gravity = Gravity.BOTTOM;
 		llPage.setLayoutParams(lpLl);
 		flPage.addView(llPage);
@@ -83,7 +85,8 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 		grid = new PlatformGridView(getContext());
 		grid.setEditPageBackground(getBackgroundView());
 		LinearLayout.LayoutParams lpWg = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
 		grid.setLayoutParams(lpWg);
 		llPage.addView(grid);
 
@@ -95,17 +98,20 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 		if (resId > 0) {
 			btnCancel.setText(resId);
 		}
-		btnCancel.setPadding(0, 0, 0, com.mob.tools.utils.R.dipToPx(getContext(), 5));
+		btnCancel.setPadding(0, 0, 0,
+				com.mob.tools.utils.R.dipToPx(getContext(), 5));
 
-		resId = getBitmapRes(getContext(), "ssdk_oks_classic_platform_corners_bg");
-		if(resId > 0){
+		resId = getBitmapRes(getContext(),
+				"ssdk_oks_classic_platform_corners_bg");
+		if (resId > 0) {
 			btnCancel.setBackgroundResource(resId);
-		}else {
-		    btnCancel.setBackgroundDrawable(new ColorDrawable(0xffffffff));
+		} else {
+			btnCancel.setBackgroundDrawable(new ColorDrawable(0xffffffff));
 		}
 
 		LinearLayout.LayoutParams lpBtn = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, com.mob.tools.utils.R.dipToPx(getContext(), 45));
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				com.mob.tools.utils.R.dipToPx(getContext(), 45));
 		int dp_10 = com.mob.tools.utils.R.dipToPx(getContext(), 10);
 		lpBtn.setMargins(dp_10, dp_10, dp_10, dp_10);
 		btnCancel.setLayoutParams(lpBtn);
@@ -113,17 +119,13 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 	}
 
 	private void initAnim() {
-		animShow = new TranslateAnimation(
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 1,
+		animShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+				Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1,
 				Animation.RELATIVE_TO_SELF, 0);
 		animShow.setDuration(300);
 
-		animHide = new TranslateAnimation(
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 0,
+		animHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+				Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
 				Animation.RELATIVE_TO_SELF, 1);
 		animHide.setDuration(300);
 	}
@@ -161,7 +163,7 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 		});
 		llPage.clearAnimation();
 		llPage.startAnimation(animHide);
-		//中断finish操作
+		// 中断finish操作
 		return true;
 	}
 

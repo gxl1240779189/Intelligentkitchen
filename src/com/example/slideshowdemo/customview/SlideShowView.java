@@ -30,7 +30,8 @@ import android.widget.LinearLayout;
 import com.example.httputil.FoodsItem;
 import com.example.httputil.SliderShowViewItem;
 import com.example.httputil.SliderShowViewItemBiz;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
+import com.example.myactivity.SliderShowViewTeachcontent;
 import com.example.myactivity.teachcontent;
 import com.example.myapplication.myApplication;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -71,7 +72,7 @@ public class SlideShowView extends FrameLayout {
 	// 放轮播图片的ImageView 的list
 	private List<ImageView> imageViewsList;
 	private List<String> foodnameList;
-	
+
 	public List<ImageView> getImageViewsList() {
 		return imageViewsList;
 	}
@@ -95,12 +96,22 @@ public class SlideShowView extends FrameLayout {
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
-			Log.i("gundong", currentItem + "");
+			// Log.i("gundong", currentItem + "");
 			viewPager.setCurrentItem(currentItem);
 			foodnametextview.setText(foodnameList.get(currentItem));
 		}
 
 	};
+	
+	/**
+	 * 
+	 * @param context
+	 * 
+	 * 
+	 * public View (Context context)是在java代码创建视图的时候被调用，如果是从xml填充的视图，就不会调用这个
+       public View (Context context, AttributeSet attrs)这个是在xml创建但是没有指定style的时候被调用
+       public View (Context context, AttributeSet attrs, int defStyle)这个也是在xml创建指定style的时候被调用
+	 */
 
 	public SlideShowView(Context context) {
 		this(context, null);
@@ -142,7 +153,7 @@ public class SlideShowView extends FrameLayout {
 		imageViewsList = new ArrayList<ImageView>();
 		dotViewsList = new ArrayList<View>();
 		imageUrls = new ArrayList<String>();
-		foodnameList=new ArrayList<String>();
+		foodnameList = new ArrayList<String>();
 
 		// 一步任务获取图片
 		new GetListTask().execute("");
@@ -180,13 +191,12 @@ public class SlideShowView extends FrameLayout {
 		}
 
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
-		foodnametextview=(TextView) findViewById(R.id.foodname);
+		foodnametextview = (TextView) findViewById(R.id.foodname);
 		viewPager.setFocusable(true);
 		viewPager.setAdapter(new MyPagerAdapter());
 		viewPager.setOnPageChangeListener(new MyPageChangeListener());
 		if (isAutoPlay) {
 			startPlay();
-			Log.i("gundong", "9898");
 		}
 	}
 
@@ -212,7 +222,7 @@ public class SlideShowView extends FrameLayout {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(context, teachcontent.class);
+					Intent intent = new Intent(context, SliderShowViewTeachcontent.class);
 					Bundle bundle = new Bundle();
 					bundle.putString("url", list.get(position).getLink());
 					bundle.putInt("flag", 1);
@@ -287,13 +297,14 @@ public class SlideShowView extends FrameLayout {
 				if (viewPager.getCurrentItem() == viewPager.getAdapter()
 						.getCount() - 1 && !isAutoPlay) {
 					viewPager.setCurrentItem(0);
-//					foodnametextview.setText(foodnameList.get(0));
+					// foodnametextview.setText(foodnameList.get(0));
 				}
 				// 当前为第一张，此时从左向右滑，则切换到最后一张
 				else if (viewPager.getCurrentItem() == 0 && !isAutoPlay) {
 					viewPager
 							.setCurrentItem(viewPager.getAdapter().getCount() - 1);
-//					foodnametextview.setText(viewPager.getAdapter().getCount() - 1);
+					// foodnametextview.setText(viewPager.getAdapter().getCount()
+					// - 1);
 				}
 				break;
 			}
@@ -308,7 +319,6 @@ public class SlideShowView extends FrameLayout {
 		@Override
 		public void onPageSelected(int pos) {
 			// TODO Auto-generated method stub
-
 			currentItem = pos;
 			for (int i = 0; i < dotViewsList.size(); i++) {
 				if (i == pos) {
@@ -369,7 +379,7 @@ public class SlideShowView extends FrameLayout {
 				list = new SliderShowViewItemBiz()
 						.getNewsItems("http://www.meishij.net/");
 				for (int i = 0; i < list.size(); i++) {
-					Log.i("msg", list.get(i).getImgLink());
+					// Log.i("msg", list.get(i).getImgLink());
 					imageUrls.add(list.get(i).getImgLink());
 					foodnameList.add(list.get(i).getFoodname());
 				}
@@ -395,24 +405,6 @@ public class SlideShowView extends FrameLayout {
 	 * @param context
 	 */
 	public static void initImageLoader(Context context) {
-		// This configuration tuning is custom. You can tune every option, you
-		// may tune some of them,
-		// or you can create default configuration by
-		// ImageLoaderConfiguration.createDefault(this);
-		// method.
-		// ImageLoaderConfiguration config = new
-		// ImageLoaderConfiguration.Builder(
-		// context).threadPriority(Thread.NORM_PRIORITY - 2)
-		// .denyCacheImageMultipleSizesInMemory()
-		// .discCacheFileNameGenerator(new Md5FileNameGenerator())
-		// .tasksProcessingOrder(QueueProcessingType.LIFO)
-		// .writeDebugLogs() // Remove
-		// // for
-		// // release
-		// // app
-		// .build();
-		// Initialize ImageLoader with configuration.
-		// ImageLoader.getInstance().init(config);
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 		options = new DisplayImageOptions.Builder()
 				.showStubImage(R.drawable.xiaolian)

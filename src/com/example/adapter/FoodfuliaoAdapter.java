@@ -5,8 +5,7 @@ import java.util.zip.Inflater;
 
 import com.example.httputil.FoodFuliao;
 
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

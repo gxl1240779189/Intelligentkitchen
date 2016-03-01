@@ -1,7 +1,6 @@
 package com.example.myactivity;
 
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myfragment.firstFragment;
 import com.example.myfragment.foodFragment;
 import com.example.myfragment.fourthFragment;
@@ -39,19 +38,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private fourthFragment fourth;
 	private View first_layout;
 	private View second_layout;
-//	private View third_layout;
+	// private View third_layout;
 	private View fourth_layout;
 	private ImageView first_image;
 	private ImageView second_image;
-//	private ImageView third_image;
+	// private ImageView third_image;
 	private ImageView fourth_image;
 	private TextView first_text;
 	private TextView second_text;
-//	private TextView third_text;
+	// private TextView third_text;
 	private TextView fourth_text;
 	public static android.support.v4.app.FragmentManager fragmentmanager;
 	public static android.support.v4.app.FragmentTransaction fragmenttransaction;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		init();
 		first_layout.setOnClickListener(this);
 		second_layout.setOnClickListener(this);
-//		third_layout.setOnClickListener(this);
+		// third_layout.setOnClickListener(this);
 		fourth_layout.setOnClickListener(this);
 
 	}
@@ -70,15 +68,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	void init() {
 		first_layout = findViewById(R.id.page1);
 		second_layout = findViewById(R.id.page2);
-//		third_layout = findViewById(R.id.page3);
+		// third_layout = findViewById(R.id.page3);
 		fourth_layout = findViewById(R.id.page4);
 		first_image = (ImageView) findViewById(R.id.page1_image);
 		second_image = (ImageView) findViewById(R.id.page2_image);
-//		third_image = (ImageView) findViewById(R.id.page3_image);
+		// third_image = (ImageView) findViewById(R.id.page3_image);
 		fourth_image = (ImageView) findViewById(R.id.page4_image);
 		first_text = (TextView) findViewById(R.id.page1_text);
 		second_text = (TextView) findViewById(R.id.page2_text);
-//		third_text = (TextView) findViewById(R.id.page3_text);
+		// third_text = (TextView) findViewById(R.id.page3_text);
 		fourth_text = (TextView) findViewById(R.id.page4_text);
 		first_image.setImageResource(R.drawable.main_recipe_red);
 		first_text.setTextColor(Color.parseColor("#FD7575"));
@@ -112,7 +110,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			clearview();
 			second_image.setImageResource(R.drawable.main_home_red);
 			second_text.setTextColor(Color.parseColor("#FD7575"));
-			hideFragments(fragment1);		
+			hideFragments(fragment1);
 			if (second != null) {
 				fragment1.show(second);
 			} else {
@@ -121,18 +119,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			}
 			break;
 
-//		case R.id.page3:
-//			clearview();
-//			third_image.setImageResource(R.drawable.main_mofang_red);
-//			third_text.setTextColor(Color.parseColor("#FD7575"));
-//			hideFragments(fragment1);
-//			if (third != null) {
-//				fragment1.show(third);
-//			} else {
-//				third = new thirdFragment();
-//				fragment1.add(R.id.content, third);
-//			}
-//			break;
+		// case R.id.page3:
+		// clearview();
+		// third_image.setImageResource(R.drawable.main_mofang_red);
+		// third_text.setTextColor(Color.parseColor("#FD7575"));
+		// hideFragments(fragment1);
+		// if (third != null) {
+		// fragment1.show(third);
+		// } else {
+		// third = new thirdFragment();
+		// fragment1.add(R.id.content, third);
+		// }
+		// break;
 
 		case R.id.page4:
 			clearview();
@@ -144,9 +142,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			} else {
 				fourth = new fourthFragment();
 				fragment1.add(R.id.content, fourth);
-			} 
+			}
 			break;
-	
+
 		}
 		fragment1.commit();
 
@@ -157,8 +155,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		first_text.setTextColor(Color.parseColor("#828383"));
 		second_image.setImageResource(R.drawable.main_home_gray);
 		second_text.setTextColor(Color.parseColor("#828383"));
-//		third_image.setImageResource(R.drawable.main_mofang_gray);
-//		third_text.setTextColor(Color.parseColor("#828383"));
+		// third_image.setImageResource(R.drawable.main_mofang_gray);
+		// third_text.setTextColor(Color.parseColor("#828383"));
 		fourth_image.setImageResource(R.drawable.main_user_gray);
 		fourth_text.setTextColor(Color.parseColor("#828383"));
 
@@ -172,17 +170,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		if (second != null) {
 			fragment.hide(second);
 		}
-//		if (third != null) {
-//			fragment.hide(third);
-//		}
+		// if (third != null) {
+		// fragment.hide(third);
+		// }
 		if (fourth != null) {
 			fragment.hide(fourth);
 		}
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
-//		super.onSaveInstanceState(outState);
+		// super.onSaveInstanceState(outState);
 	}
 }

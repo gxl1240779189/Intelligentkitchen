@@ -1,8 +1,6 @@
 package com.example.myfragment;
 
-
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 
 import android.app.Fragment;
 import android.os.Bundle;

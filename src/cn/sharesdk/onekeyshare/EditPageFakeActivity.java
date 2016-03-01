@@ -76,8 +76,10 @@ public class EditPageFakeActivity extends FakeActivity {
 	}
 
 	protected boolean isShowAtUserLayout(String platformName) {
-		return "SinaWeibo".equals(platformName) || "TencentWeibo".equals(platformName)
-				|| "Facebook".equals(platformName) || "Twitter".equals(platformName)
+		return "SinaWeibo".equals(platformName)
+				|| "TencentWeibo".equals(platformName)
+				|| "Facebook".equals(platformName)
+				|| "Twitter".equals(platformName)
 				|| "FacebookMessenger".equals(platformName);
 	}
 
@@ -88,9 +90,10 @@ public class EditPageFakeActivity extends FakeActivity {
 	protected String getJoinSelectedUser(HashMap<String, Object> data) {
 		if (data != null && data.containsKey("selected")) {
 			@SuppressWarnings("unchecked")
-			ArrayList<String> selected = (ArrayList<String>) data.get("selected");
-			String platform = ((Platform)data.get("platform")).getName();
-			if("FacebookMessenger".equals(platform)) {
+			ArrayList<String> selected = (ArrayList<String>) data
+					.get("selected");
+			String platform = ((Platform) data.get("platform")).getName();
+			if ("FacebookMessenger".equals(platform)) {
 				toFriendList = selected;
 				return null;
 			}
@@ -103,19 +106,19 @@ public class EditPageFakeActivity extends FakeActivity {
 		return null;
 	}
 
-	public boolean haveImage(){
+	public boolean haveImage() {
 		String imageUrl = (String) shareParamMap.get("imageUrl");
 		String imagePath = (String) shareParamMap.get("imagePath");
 		Bitmap viewToShare = (Bitmap) shareParamMap.get("viewToShare");
 		String[] imageArray = (String[]) shareParamMap.get("imageArray");
 
-		if(!TextUtils.isEmpty(imagePath) && new File(imagePath).exists()) {
+		if (!TextUtils.isEmpty(imagePath) && new File(imagePath).exists()) {
 			return true;
-		} else if(viewToShare != null && !viewToShare.isRecycled()){
+		} else if (viewToShare != null && !viewToShare.isRecycled()) {
 			return true;
 		} else if (!TextUtils.isEmpty(imageUrl)) {
 			return true;
-		} else if(imageArray != null && imageArray.length > 0) {
+		} else if (imageArray != null && imageArray.length > 0) {
 			return true;
 		}
 
@@ -129,13 +132,13 @@ public class EditPageFakeActivity extends FakeActivity {
 		String[] imageArray = (String[]) shareParamMap.get("imageArray");
 
 		shareImageList = new ArrayList<ImageInfo>();
-		if(!TextUtils.isEmpty(imagePath) && new File(imagePath).exists()) {
+		if (!TextUtils.isEmpty(imagePath) && new File(imagePath).exists()) {
 			ImageInfo imageInfo = new ImageInfo();
 			imageInfo.paramName = "imagePath";
 			imageInfo.srcValue = imagePath;
 			shareImageList.add(imageInfo);
 			shareParamMap.remove("imagePath");
-		} else if(viewToShare != null && !viewToShare.isRecycled()){
+		} else if (viewToShare != null && !viewToShare.isRecycled()) {
 			ImageInfo imageInfo = new ImageInfo();
 			imageInfo.paramName = "viewToShare";
 			imageInfo.bitmap = viewToShare;
@@ -147,9 +150,9 @@ public class EditPageFakeActivity extends FakeActivity {
 			imageInfo.srcValue = imageUrl;
 			shareImageList.add(imageInfo);
 			shareParamMap.remove("imageUrl");
-		} else if(imageArray != null && imageArray.length > 0) {
-			for(String imageUri : imageArray) {
-				if(TextUtils.isEmpty(imageUri))
+		} else if (imageArray != null && imageArray.length > 0) {
+			for (String imageUri : imageArray) {
+				if (TextUtils.isEmpty(imageUri))
 					continue;
 				ImageInfo imageInfo = new ImageInfo();
 				imageInfo.paramName = "imageArray";
@@ -159,22 +162,24 @@ public class EditPageFakeActivity extends FakeActivity {
 			shareParamMap.remove("imageArray");
 		}
 
-		if(shareImageList.size() == 0) {
+		if (shareImageList.size() == 0) {
 			return false;
 		}
 
 		new AsyncTask<Object, Void, ImageListResultsCallback>() {
 			protected ImageListResultsCallback doInBackground(Object... objects) {
-				for(ImageInfo imageInfo : shareImageList) {
-					if(imageInfo.bitmap == null) {
-						try{
+				for (ImageInfo imageInfo : shareImageList) {
+					if (imageInfo.bitmap == null) {
+						try {
 							Bitmap bitmap;
 							String uri = imageInfo.srcValue;
-							if(uri.startsWith("http://") || uri.startsWith("https://")) {
-								uri = BitmapHelper.downloadBitmap(activity, uri);
+							if (uri.startsWith("http://")
+									|| uri.startsWith("https://")) {
+								uri = BitmapHelper
+										.downloadBitmap(activity, uri);
 							}
 							bitmap = BitmapHelper.getBitmap(uri);
-							if(bitmap == null)
+							if (bitmap == null)
 								continue;
 
 							imageInfo.bitmap = bitmap;
@@ -194,44 +199,53 @@ public class EditPageFakeActivity extends FakeActivity {
 	}
 
 	protected void removeImage(ImageInfo imageInfo) {
-		if(shareImageList == null || imageInfo == null)
+		if (shareImageList == null || imageInfo == null)
 			return;
 		shareImageList.remove(imageInfo);
 	}
 
 	protected void setResultAndFinish() {
 		ArrayList<String> imageArray = new ArrayList<String>();
-		if(shareImageList != null) {
-			for(ImageInfo imageInfo : shareImageList) {
-				if("imagePath".equals(imageInfo.paramName) || "imageUrl".equals(imageInfo.paramName)) {
+		if (shareImageList != null) {
+			for (ImageInfo imageInfo : shareImageList) {
+				if ("imagePath".equals(imageInfo.paramName)
+						|| "imageUrl".equals(imageInfo.paramName)) {
 					shareParamMap.put(imageInfo.paramName, imageInfo.srcValue);
-				} else if("viewToShare".equals(imageInfo.paramName)) {
+				} else if ("viewToShare".equals(imageInfo.paramName)) {
 					shareParamMap.put(imageInfo.paramName, imageInfo.bitmap);
-				} else if("imageArray".equals(imageInfo.paramName)) {
+				} else if ("imageArray".equals(imageInfo.paramName)) {
 					imageArray.add(imageInfo.srcValue);
 				}
 			}
 			shareImageList.clear();
-			if(imageArray.size() == 0) {
+			if (imageArray.size() == 0) {
 				shareParamMap.put("imageArray", null);
 			} else {
-				shareParamMap.put("imageArray", imageArray.toArray(new String[imageArray.size()]));
+				shareParamMap.put("imageArray",
+						imageArray.toArray(new String[imageArray.size()]));
 			}
 		}
 
-		HashMap<Platform, HashMap<String, Object>> editRes = new HashMap<Platform, HashMap<String,Object>>();
+		HashMap<Platform, HashMap<String, Object>> editRes = new HashMap<Platform, HashMap<String, Object>>();
 
-		for(Platform platform : platforms) {
+		for (Platform platform : platforms) {
 
-			if("FacebookMessenger".equals(platform.getName())) {
-				HashMap<String, Object> param = new HashMap<String, Object>(shareParamMap);
-				if(toFriendList != null && toFriendList.size() > 0) {
-					param.put("address", toFriendList.get(toFriendList.size() - 1));
+			if ("FacebookMessenger".equals(platform.getName())) {
+				HashMap<String, Object> param = new HashMap<String, Object>(
+						shareParamMap);
+				if (toFriendList != null && toFriendList.size() > 0) {
+					param.put("address",
+							toFriendList.get(toFriendList.size() - 1));
 				}
-				if(param.get("address") == null) {
-					int resId = getStringRes(activity, "ssdk_oks_select_a_friend");
+				if (param.get("address") == null) {
+					int resId = getStringRes(activity,
+							"ssdk_oks_select_a_friend");
 					if (resId > 0) {
-						Toast.makeText(getContext(), activity.getString(resId) + " - " + platform.getName(), Toast.LENGTH_SHORT).show();
+						Toast.makeText(
+								getContext(),
+								activity.getString(resId) + " - "
+										+ platform.getName(),
+								Toast.LENGTH_SHORT).show();
 					}
 					return;
 				}

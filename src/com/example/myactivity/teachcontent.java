@@ -20,11 +20,13 @@ import org.jsoup.select.Elements;
 
 import com.example.adapter.FoodfuliaoAdapter;
 import com.example.adapter.FoodteachAdapter;
+import com.example.db.FoodsItemDao;
 import com.example.httputil.CommonException;
 import com.example.httputil.FoodFuliao;
 import com.example.httputil.Foodcontent;
+import com.example.httputil.FoodsItem;
 import com.example.httputil.SliderShowViewItem;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myapplication.myApplication;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -50,6 +52,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class teachcontent extends Activity implements
 		android.view.View.OnClickListener {
@@ -58,6 +61,7 @@ public class teachcontent extends Activity implements
 	public ProgressBar mProgressBar;
 	public TextView title_textview;
 	ImageView showfood;
+	ImageView shoucang;
 	TextView showtitle;
 	TextView showdetail;
 	ImageView show_writer_image;
@@ -72,6 +76,9 @@ public class teachcontent extends Activity implements
 	private int flag;
 	List<FoodFuliao> foodfuliaos;
 	List<Foodcontent> foodcontents;
+	FoodsItem fooditem;
+	FoodsItemDao fooditemdao;
+	String url;
 	public Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			Log.i("url", msg.obj.toString());
@@ -85,6 +92,10 @@ public class teachcontent extends Activity implements
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.teachcontent);
+		url=getIntent().getExtras().getString("url");
+		fooditemdao=new FoodsItemDao(teachcontent.this);
+		fooditem=(FoodsItem) getIntent().getExtras().getSerializable("fooditem");
+		shoucang=(ImageView) findViewById(R.id.comment);
 		teachcontent_listview = (ListView) findViewById(R.id.teachcontent__listview);
 		fuliao_listview = (ListView) findViewById(R.id.fuliao__listview);
 		mProgressBar = (ProgressBar) findViewById(R.id.teachcontent__newsContentPro);
@@ -104,6 +115,7 @@ public class teachcontent extends Activity implements
 		imageLoader.init(ImageLoaderConfiguration
 				.createDefault(teachcontent.this));
 		btn_back.setOnClickListener(this);
+		shoucang.setOnClickListener(this);
 		flag = getIntent().getExtras().getInt("flag");
 		options = new DisplayImageOptions.Builder()
 				.showStubImage(R.drawable.xiaolian)
@@ -114,48 +126,53 @@ public class teachcontent extends Activity implements
 				.displayer(new FadeInBitmapDisplayer(300)).build();
 
 		try {
-			doGet(getIntent().getStringExtra("url"));
+			if(fooditem.getLink()==null)
+			doGet(url);
+			else
+			doGet(fooditem.getLink());
 		} catch (CommonException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
-	public void jiexi_shouji(String canshu)
-	{
-		Document doc = Jsoup.parse(canshu);
-		 String food_title = doc.getElementsByClass("fade_topbar").get(0)
-		 .getElementsByTag("h2").get(0).text();
-		 Log.i("food_title", food_title);
-//		 String showfood_text = null;
-		 String showfood_text = doc.getElementsByClass("cp_main").attr("style");
-		 Log.i("showfood_text", showfood_text);
-		 String NewStr=showfood_text.substring(showfood_text.indexOf("(")+1, showfood_text.lastIndexOf(")"));
-		 Log.i("showfood_text", NewStr);
 
-		 
-//		  String showdetail_text =
-//		 doc.getElementsByClass("materials").get(0)
-//		  .getElementsByTag("p").get(0).text();
-		 String show_writer_name_text = doc.getElementsByClass("con_main")
-		 .get(0).getElementsByTag("a").get(0).getElementsByTag("span").text();
-		
-		 String show_writer_image_text = doc.getElementsByClass("con_main")
-				 .get(0).getElementsByTag("a").get(0).getElementsByTag("img").attr("src");
-//		 String show_writer_date_text = doc.getElementsByClass("user")
-//		 .get(0).getElementsByClass("info").get(0)
-//		 .getElementsByTag("strong").get(0).text();
-//		 Log.i("tishi", food_title);
-//		/*
-//		 * 下面解析出做该菜要用到的食材和辅料
-//		 */
+	public void jiexi_shouji(String canshu) {
+		Document doc = Jsoup.parse(canshu);
+		String food_title = doc.getElementsByClass("fade_topbar").get(0)
+				.getElementsByTag("h2").get(0).text();
+		Log.i("food_title", food_title);
+		// String showfood_text = null;
+		String showfood_text = doc.getElementsByClass("cp_main").attr("style");
+		Log.i("showfood_text", showfood_text);
+		String NewStr = showfood_text.substring(showfood_text.indexOf("(") + 1,
+				showfood_text.lastIndexOf(")"));
+		Log.i("showfood_text", NewStr);
+
+		// String showdetail_text =
+		// doc.getElementsByClass("materials").get(0)
+		// .getElementsByTag("p").get(0).text();
+		String show_writer_name_text = doc.getElementsByClass("con_main")
+				.get(0).getElementsByTag("a").get(0).getElementsByTag("span")
+				.text();
+
+		String show_writer_image_text = doc.getElementsByClass("con_main")
+				.get(0).getElementsByTag("a").get(0).getElementsByTag("img")
+				.attr("src");
+		// String show_writer_date_text = doc.getElementsByClass("user")
+		// .get(0).getElementsByClass("info").get(0)
+		// .getElementsByTag("strong").get(0).text();
+		// Log.i("tishi", food_title);
+		// /*
+		// * 下面解析出做该菜要用到的食材和辅料
+		// */
 		if (doc.select("div.material_coloum_type1").size() > 0) {
 			Elements units = doc.getElementsByClass("material_coloum_type1");
-			Elements units_zl = units.get(0).getElementsByClass("material_coloum");
+			Elements units_zl = units.get(0).getElementsByClass(
+					"material_coloum");
 			for (int i = 0; i < units_zl.size(); i++) {
 				FoodFuliao fuliao = new FoodFuliao();
-				Element content_zl_name = units_zl.get(i)			
+				Element content_zl_name = units_zl.get(i)
 						.getElementsByTag("span").get(0);
 				String content_name = content_zl_name.text();
 				Element content_zl_shuliang = units_zl.get(i)
@@ -168,15 +185,17 @@ public class teachcontent extends Activity implements
 				foodfuliaos.add(fuliao);
 			}
 		}
-		 
+
 		if (doc.select("div.material_coloum_type2").size() > 0) {
-			Elements units_fuliao = doc.getElementsByClass("material_coloum_type2");
-			Elements Units_fuliao = units_fuliao.get(0).getElementsByClass("material_coloum");
+			Elements units_fuliao = doc
+					.getElementsByClass("material_coloum_type2");
+			Elements Units_fuliao = units_fuliao.get(0).getElementsByClass(
+					"material_coloum");
 			Log.i("content_fuliao_shuliang", Units_fuliao.size() + "");
 			for (int i = 0; i < Units_fuliao.size(); i++) {
 				FoodFuliao fuliao = new FoodFuliao();
 				Element content_fuliao = Units_fuliao.get(i)
-						.getElementsByTag("span").get(0);					
+						.getElementsByTag("span").get(0);
 				String content_fuliao_name = content_fuliao.text();
 				Element content_zl_shuliang = Units_fuliao.get(i)
 						.getElementsByTag("em").get(0);
@@ -191,88 +210,83 @@ public class teachcontent extends Activity implements
 		fuliao_listview.setAdapter(new FoodfuliaoAdapter(myApplication
 				.GetContext(), R.layout.foodfuliaoitem, foodfuliaos));
 
-		 /**
+		/**
 		 * 下面解析出详细的做菜方法
 		 */
-		 if (doc.select("div.cp_step").size()>0) {
-		 Elements units_teach = doc.getElementsByClass("cp_step").get(0).getElementsByTag("h2");
-		 String teachtext;
-		 String imagelink;
-		 for (int i = 0; i < units_teach.size()-1; i++) {
-		 Foodcontent foodcontent = new Foodcontent();	
-		 Log.i("teachtext",  units_teach.get(i).text());
-		 if(units_teach.get(i).nextElementSibling().getElementsByTag("img").size()>0)
-		 {
-			 imagelink=units_teach.get(i).nextElementSibling().getElementsByTag("img").get(0).attr("src");
-			 teachtext=units_teach.get(i).nextElementSibling().nextElementSibling().text();
-			 Log.i("imagelink", imagelink);
-			 Log.i("teachtext", teachtext);
-			  showfood_text = imagelink;
-		 }else
-		 {
-			 imagelink="noimagelink";
-			 teachtext=units_teach.get(i).nextElementSibling().nextElementSibling().text();
-			 Log.i("imagelink", imagelink);
-			 Log.i("teachtext", teachtext);
-		 }	
-		 foodcontent.setNum(units_teach.get(i).text());
-		 foodcontent.setImagelink(imagelink);
-		 foodcontent.setTeachtext(teachtext);
-		 foodcontents.add(foodcontent);
-		 }
-		 }
+		if (doc.select("div.cp_step").size() > 0) {
+			Elements units_teach = doc.getElementsByClass("cp_step").get(0)
+					.getElementsByTag("h2");
+			String teachtext;
+			String imagelink;
+			for (int i = 0; i < units_teach.size() - 1; i++) {
+				Foodcontent foodcontent = new Foodcontent();
+				Log.i("teachtext", units_teach.get(i).text());
+				if (units_teach.get(i).nextElementSibling()
+						.getElementsByTag("img").size() > 0) {
+					imagelink = units_teach.get(i).nextElementSibling()
+							.getElementsByTag("img").get(0).attr("src");
+					teachtext = units_teach.get(i).nextElementSibling()
+							.nextElementSibling().text();
+					Log.i("imagelink", imagelink);
+					Log.i("teachtext", teachtext);
+					showfood_text = imagelink;
+				} else {
+					imagelink = "noimagelink";
+					teachtext = units_teach.get(i).nextElementSibling().text();
+					Log.i("imagelink", imagelink);
+					Log.i("teachtext", teachtext);
+				}
+				foodcontent.setNum(units_teach.get(i).text());
+				foodcontent.setImagelink(imagelink);
+				foodcontent.setTeachtext(teachtext);
+				foodcontents.add(foodcontent);
+			}
+		}
 
-		
-		 teachcontent_listview
-		 .setAdapter(new FoodteachAdapter(
-		 myApplication.GetContext(),
-		 R.layout.foodlistviewteachitem, foodcontents));
-		 setfuliaoListViewHeightBasedOnChildren(fuliao_listview);
-		 setListViewHeightBasedOnChildren(teachcontent_listview);
-		 title_textview.setText(food_title);
-		
-		 imageLoader.displayImage(NewStr, showfood, options);
-//		  showdetail.setText(showdetail_text);
-		 showtitle.setText(food_title);
-     	 show_writer_name.setText(show_writer_name_text);
-//		 show_writer_date.setText(show_writer_date_text);
-		 imageLoader.displayImage(show_writer_image_text,
-		 show_writer_image,
-		 options);
-		
-		 showfood.setVisibility(View.VISIBLE);
-		 show_writer_image.setVisibility(View.VISIBLE);
-		 showtitle.setVisibility(View.VISIBLE);
-//		 showdetail.setVisibility(View.VISIBLE);
-		 show_writer_name.setVisibility(View.VISIBLE);
-		 show_writer_date.setVisibility(View.VISIBLE);
-		 show_content_tishi.setVisibility(View.VISIBLE);
-		 show_fuliao_tishi.setVisibility(View.VISIBLE);
-		 show_xian.setVisibility(View.VISIBLE);
-		 mProgressBar.setVisibility(View.GONE);
+		teachcontent_listview.setAdapter(new FoodteachAdapter(myApplication
+				.GetContext(), R.layout.foodlistviewteachitem, foodcontents));
+		setfuliaoListViewHeightBasedOnChildren(fuliao_listview);
+		setListViewHeightBasedOnChildren(teachcontent_listview);
+		title_textview.setText(food_title);
+
+		imageLoader.displayImage(NewStr, showfood, options);
+		// showdetail.setText(showdetail_text);
+		showtitle.setText(food_title);
+		show_writer_name.setText(show_writer_name_text);
+		// show_writer_date.setText(show_writer_date_text);
+		imageLoader.displayImage(show_writer_image_text, show_writer_image,
+				options);
+
+		showfood.setVisibility(View.VISIBLE);
+		show_writer_image.setVisibility(View.VISIBLE);
+		showtitle.setVisibility(View.VISIBLE);
+		// showdetail.setVisibility(View.VISIBLE);
+		show_writer_name.setVisibility(View.VISIBLE);
+		show_writer_date.setVisibility(View.VISIBLE);
+		show_content_tishi.setVisibility(View.VISIBLE);
+		show_fuliao_tishi.setVisibility(View.VISIBLE);
+		show_xian.setVisibility(View.VISIBLE);
+		mProgressBar.setVisibility(View.GONE);
 	}
 
-	public void jiexi_wangye(String canshu)
-	{
+	public void jiexi_wangye(String canshu) {
 		Document doc = Jsoup.parse(canshu);
-		 String food_title = doc.getElementsByClass("info1").get(0)
-		 .getElementsByTag("a").get(0).text();
-		 String showfood_text = doc.getElementsByClass("cp_headerimg_w")
-		 .get(0).getElementsByTag("img").get(0).attr("src");
-		  String showdetail_text =
-		 doc.getElementsByClass("materials").get(0)
-		  .getElementsByTag("p").get(0).text();
-		 String show_writer_name_text = doc.getElementsByClass("user")
-		 .get(0).getElementsByClass("info").get(0)
-		 .getElementsByTag("h4").get(0).getElementsByTag("a").get(0)
-		 .text();
-		 String show_writer_image_text = doc.getElementsByClass("user")
-		 .get(0).getElementsByTag("a").get(0)
-		 .getElementsByTag("img").get(0).attr("src");
-		 String show_writer_date_text = doc.getElementsByClass("user")
-		 .get(0).getElementsByClass("info").get(0)
-		 .getElementsByTag("strong").get(0).text();
-		 Log.i("tishi", food_title);
+		String food_title = doc.getElementsByClass("info1").get(0)
+				.getElementsByTag("a").get(0).text();
+		String showfood_text = doc.getElementsByClass("cp_headerimg_w").get(0)
+				.getElementsByTag("img").get(0).attr("src");
+		String showdetail_text = doc.getElementsByClass("materials").get(0)
+				.getElementsByTag("p").get(0).text();
+		String show_writer_name_text = doc.getElementsByClass("user").get(0)
+				.getElementsByClass("info").get(0).getElementsByTag("h4")
+				.get(0).getElementsByTag("a").get(0).text();
+		String show_writer_image_text = doc.getElementsByClass("user").get(0)
+				.getElementsByTag("a").get(0).getElementsByTag("img").get(0)
+				.attr("src");
+		String show_writer_date_text = doc.getElementsByClass("user").get(0)
+				.getElementsByClass("info").get(0).getElementsByTag("strong")
+				.get(0).text();
+		Log.i("tishi", food_title);
 		/*
 		 * 下面解析出做该菜要用到的食材和辅料
 		 */
@@ -282,14 +296,12 @@ public class teachcontent extends Activity implements
 			for (int i = 0; i < units_zl.size(); i++) {
 				FoodFuliao fuliao = new FoodFuliao();
 				Element content_zl_name = units_zl.get(i)
-						.getElementsByClass("c").get(0)
-						.getElementsByTag("h4").get(0)
-						.getElementsByTag("a").get(0);
+						.getElementsByClass("c").get(0).getElementsByTag("h4")
+						.get(0).getElementsByTag("a").get(0);
 				String content_name = content_zl_name.text();
 				Element content_zl_shuliang = units_zl.get(i)
-						.getElementsByClass("c").get(0)
-						.getElementsByTag("h4").get(0)
-						.getElementsByTag("span").get(0);
+						.getElementsByClass("c").get(0).getElementsByTag("h4")
+						.get(0).getElementsByTag("span").get(0);
 				String content_shuliang = content_zl_shuliang.text();
 				fuliao.setFuliaoname(content_name);
 				fuliao.setFuliaoshuliang(content_shuliang);
@@ -300,14 +312,13 @@ public class teachcontent extends Activity implements
 		}
 		if (doc.select("div.fuliao").size() > 0) {
 			Elements units_fuliao = doc.getElementsByClass("fuliao");
-			Elements Units_fuliao = units_fuliao.get(0).getElementsByTag(
-					"li");
+			Elements Units_fuliao = units_fuliao.get(0).getElementsByTag("li");
 			Log.i("content_fuliao_shuliang", Units_fuliao.size() + "");
 			for (int i = 0; i < Units_fuliao.size(); i++) {
 				FoodFuliao fuliao = new FoodFuliao();
 				Element content_fuliao = Units_fuliao.get(i)
-						.getElementsByTag("h4").get(0)
-						.getElementsByTag("a").get(0);
+						.getElementsByTag("h4").get(0).getElementsByTag("a")
+						.get(0);
 				String content_fuliao_name = content_fuliao.text();
 				Element content_zl_shuliang = Units_fuliao.get(i)
 						.getElementsByTag("span").get(0);
@@ -325,117 +336,108 @@ public class teachcontent extends Activity implements
 		// /**
 		// * 下面解析出详细的做菜方法
 		// */
-		 if (doc.select("div.content").size()>0) {
-		 Log.i("1111", "1111");
-		 Elements units_teach = doc.getElementsByClass("measure").get(0)
-		 .getElementsByClass("edit").get(0)
-		 .getElementsByClass("content");
-		 Log.i("units_teach", units_teach.size() + "");
-		 String teachtext;
-		 String imagelink;
-		 for (int i = 0; i < units_teach.size(); i++) {
-		 Foodcontent foodcontent = new Foodcontent();
-		
-		 if (units_teach.get(i).getElementsByClass("c").get(0)
-		 .getElementsByTag("p").size() == 2) {
-		 teachtext = units_teach.get(i).getElementsByClass("c")
-		 .get(0).getElementsByTag("p").get(0).text();
-		 imagelink = units_teach.get(i).getElementsByClass("c")
-		 .get(0).getElementsByTag("p").get(1)
-		 .getElementsByTag("img").get(0).attr("src");
-		 } else {
-		 if (units_teach.get(i).getElementsByClass("c").get(0)
-		 .getElementsByTag("p").get(0).hasAttr("src")) {
-		 teachtext = "";
-		 imagelink = units_teach.get(i)
-		 .getElementsByClass("c").get(0)
-		 .getElementsByTag("p").get(0)
-		 .getElementsByTag("img").get(0).attr("src");
-		 } else {
-		 teachtext = units_teach.get(i)
-		 .getElementsByClass("c").get(0)
-		 .getElementsByTag("p").get(0).text();
-		 imagelink = "noimagelink";
-		 }
-		 }
-		
-		 Log.i("teachtext", teachtext);
-		 Log.i("imagelink", imagelink);
-		 foodcontent.setNum(String.valueOf(i + 1));
-		 foodcontent.setImagelink(imagelink);
-		 foodcontent.setTeachtext(teachtext);
-		 foodcontents.add(foodcontent);
-		 }
-		 } else {
-		 Log.i("2222", "2222");
-		 Elements units_teach = doc.getElementsByClass("measure").get(0)
-		 .getElementsByClass("edit").get(0)
-		 .getElementsByTag("p");
-		 Log.i("units_teach", units_teach.size() + "");
-		 Log.i("units_teach_texy", units_teach.get(0).text());
-		 int num=0;
-		 for (int i = 0, j = 0; i < units_teach.size() - 1; i++, j++) {
-		 Foodcontent foodcontent = new Foodcontent();
-		 String teachtext = null;
-		 String imagelink = null;
-		 if (units_teach.get(i).getElementsByTag("em").size() > 0) {
-		 teachtext = units_teach.get(i).text();
-		 int flag = i + 1;
-		 if (units_teach.get(flag).getElementsByClass("conimg")
-		 .size() > 0) {
-		 imagelink = units_teach.get(flag)
-		 .getElementsByClass("conimg").get(0)
-		 .attr("src");
-		 i++;
-		 } else {
-		 imagelink = "noimagelink";
-		 }
-		 } else if (units_teach.get(i).getElementsByTag("img")
-		 .size() > 0) {
-		 teachtext = "";
-		 imagelink = units_teach.get(i)
-		 .getElementsByClass("conimg").get(0)
-		 .attr("src");
-		 }else
-		 {
-		 continue;
-		 }
-		 Log.i("teachtext", teachtext);
-		 Log.i("imagelink", imagelink);
-		 foodcontent.setNum(String.valueOf(++num));
-		 foodcontent.setImagelink(imagelink);
-		 foodcontent.setTeachtext(teachtext);
-		 foodcontents.add(foodcontent);
-		 }
-		 }
-		
-		 teachcontent_listview
-		 .setAdapter(new FoodteachAdapter(
-		 myApplication.GetContext(),
-		 R.layout.foodlistviewteachitem, foodcontents));
-		 setfuliaoListViewHeightBasedOnChildren(fuliao_listview);
-		 setListViewHeightBasedOnChildren(teachcontent_listview);
-		 title_textview.setText(food_title);
-		
-		 imageLoader.displayImage(showfood_text, showfood, options);
-		 // showdetail.setText(showdetail_text);
-		 showtitle.setText(food_title);
-		 show_writer_name.setText(show_writer_name_text);
-		 show_writer_date.setText(show_writer_date_text);
-		 imageLoader.displayImage(show_writer_image_text,
-		 show_writer_image,
-		 options);
-		
-		 showfood.setVisibility(View.VISIBLE);
-		 show_writer_image.setVisibility(View.VISIBLE);
-		 showtitle.setVisibility(View.VISIBLE);
-		 // showdetail.setVisibility(View.VISIBLE);
-		 show_writer_name.setVisibility(View.VISIBLE);
-		 show_writer_date.setVisibility(View.VISIBLE);
-		 show_content_tishi.setVisibility(View.VISIBLE);
-		 show_fuliao_tishi.setVisibility(View.VISIBLE);
-		 show_xian.setVisibility(View.VISIBLE);
-		 mProgressBar.setVisibility(View.GONE);
+		if (doc.select("div.content").size() > 0) {
+			Log.i("1111", "1111");
+			Elements units_teach = doc.getElementsByClass("measure").get(0)
+					.getElementsByClass("edit").get(0)
+					.getElementsByClass("content");
+			Log.i("units_teach", units_teach.size() + "");
+			String teachtext;
+			String imagelink;
+			for (int i = 0; i < units_teach.size(); i++) {
+				Foodcontent foodcontent = new Foodcontent();
+
+				if (units_teach.get(i).getElementsByClass("c").get(0)
+						.getElementsByTag("p").size() == 2) {
+					teachtext = units_teach.get(i).getElementsByClass("c")
+							.get(0).getElementsByTag("p").get(0).text();
+					imagelink = units_teach.get(i).getElementsByClass("c")
+							.get(0).getElementsByTag("p").get(1)
+							.getElementsByTag("img").get(0).attr("src");
+				} else {
+					if (units_teach.get(i).getElementsByClass("c").get(0)
+							.getElementsByTag("p").get(0).hasAttr("src")) {
+						teachtext = "";
+						imagelink = units_teach.get(i).getElementsByClass("c")
+								.get(0).getElementsByTag("p").get(0)
+								.getElementsByTag("img").get(0).attr("src");
+					} else {
+						teachtext = units_teach.get(i).getElementsByClass("c")
+								.get(0).getElementsByTag("p").get(0).text();
+						imagelink = "noimagelink";
+					}
+				}
+
+				Log.i("teachtext", teachtext);
+				Log.i("imagelink", imagelink);
+				foodcontent.setNum(String.valueOf(i + 1));
+				foodcontent.setImagelink(imagelink);
+				foodcontent.setTeachtext(teachtext);
+				foodcontents.add(foodcontent);
+			}
+		} else {
+			Log.i("2222", "2222");
+			Elements units_teach = doc.getElementsByClass("measure").get(0)
+					.getElementsByClass("edit").get(0).getElementsByTag("p");
+			Log.i("units_teach", units_teach.size() + "");
+			Log.i("units_teach_texy", units_teach.get(0).text());
+			int num = 0;
+			for (int i = 0, j = 0; i < units_teach.size() - 1; i++, j++) {
+				Foodcontent foodcontent = new Foodcontent();
+				String teachtext = null;
+				String imagelink = null;
+				if (units_teach.get(i).getElementsByTag("em").size() > 0) {
+					teachtext = units_teach.get(i).text();
+					int flag = i + 1;
+					if (units_teach.get(flag).getElementsByClass("conimg")
+							.size() > 0) {
+						imagelink = units_teach.get(flag)
+								.getElementsByClass("conimg").get(0)
+								.attr("src");
+						i++;
+					} else {
+						imagelink = "noimagelink";
+					}
+				} else if (units_teach.get(i).getElementsByTag("img").size() > 0) {
+					teachtext = "";
+					imagelink = units_teach.get(i).getElementsByClass("conimg")
+							.get(0).attr("src");
+				} else {
+					continue;
+				}
+				Log.i("teachtext", teachtext);
+				Log.i("imagelink", imagelink);
+				foodcontent.setNum(String.valueOf(++num));
+				foodcontent.setImagelink(imagelink);
+				foodcontent.setTeachtext(teachtext);
+				foodcontents.add(foodcontent);
+			}
+		}
+
+		teachcontent_listview.setAdapter(new FoodteachAdapter(myApplication
+				.GetContext(), R.layout.foodlistviewteachitem, foodcontents));
+		setfuliaoListViewHeightBasedOnChildren(fuliao_listview);
+		setListViewHeightBasedOnChildren(teachcontent_listview);
+		title_textview.setText(food_title);
+
+		imageLoader.displayImage(showfood_text, showfood, options);
+		// showdetail.setText(showdetail_text);
+		showtitle.setText(food_title);
+		show_writer_name.setText(show_writer_name_text);
+		show_writer_date.setText(show_writer_date_text);
+		imageLoader.displayImage(show_writer_image_text, show_writer_image,
+				options);
+
+		showfood.setVisibility(View.VISIBLE);
+		show_writer_image.setVisibility(View.VISIBLE);
+		showtitle.setVisibility(View.VISIBLE);
+		// showdetail.setVisibility(View.VISIBLE);
+		show_writer_name.setVisibility(View.VISIBLE);
+		show_writer_date.setVisibility(View.VISIBLE);
+		show_content_tishi.setVisibility(View.VISIBLE);
+		show_fuliao_tishi.setVisibility(View.VISIBLE);
+		show_xian.setVisibility(View.VISIBLE);
+		mProgressBar.setVisibility(View.GONE);
 	}
 
 	public void doGet(final String urlStr) throws CommonException {
@@ -561,7 +563,11 @@ public class teachcontent extends Activity implements
 		case R.id.backBtn:
 			finish();
 			break;
-		default:
+		case R.id.comment:
+			//添加收藏代码
+			Log.i("fooditem", fooditem.getTitle());
+			fooditemdao.add(fooditem);
+			Toast.makeText(teachcontent.this, "收藏成功", Toast.LENGTH_LONG).show();
 			break;
 		}
 	}

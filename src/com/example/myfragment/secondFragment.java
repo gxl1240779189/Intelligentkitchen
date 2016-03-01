@@ -9,18 +9,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.db.NewsItemDao;
 import com.example.httputil.CommonException;
-import com.example.httputil.NewsItem;
-import com.example.httputil.NewsItemBiz;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myactivity.kaiguanshebeiActivity;
+import com.example.myactivity.shezhiWifi;
 import com.example.myapplication.myApplication;
 import com.example.myinterface.MysocketInterface;
-import com.example.netutil.NetUtil;
+import com.example.myinterface.OnMenuItemClickListener;
+import com.example.ui.roundmenu;
+import com.example.utils.NetUtil;
 import com.example.other.Mysocket;
-import com.example.paintcanvas.OnMenuItemClickListener;
-import com.example.paintcanvas.roundmenu;
 
 import android.app.Application;
 import android.content.Intent;
@@ -64,17 +62,17 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 		}
 	};
 	private String[] mItemTexts = new String[] { "实时数据 ", "开关设备", "定时烹饪",
-			"火力调节", "氛围渲染", "危险报警" };
-	private int[] mItemImgs = new int[] { R.drawable.home_mbank_1_normal,
-			R.drawable.home_mbank_2_normal, R.drawable.home_mbank_3_normal,
-			R.drawable.home_mbank_4_normal, R.drawable.home_mbank_5_normal,
-			R.drawable.home_mbank_6_normal };
+			"火力调节", "设置", "危险报警" };
+	private int[] mItemImgs = new int[] { R.drawable.home_shishishuju,
+			R.drawable.home_kaiguanshebei, R.drawable.home_dingshi,
+			R.drawable.home_huolitiaojie, R.drawable.home_shezhi,
+			R.drawable.home_weixian };
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.circle_menu, container, false);
-//	   shezhi = (TextView) v.findViewById(R.id.yaokong_shezhi);
+		// shezhi = (TextView) v.findViewById(R.id.yaokong_shezhi);
 		tixing = (ImageView) v.findViewById(R.id.yaokong_tixing);
 		mCircleMenuLayout = (roundmenu) v.findViewById(R.id.id_menulayout);
 		mCircleMenuLayout.setmenuitem_text_icon(mItemTexts, mItemImgs);
@@ -86,10 +84,10 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 						// TODO Auto-generated method stub
 						Toast.makeText(myApplication.GetContext(),
 								mItemTexts[pos], Toast.LENGTH_LONG).show();
-						 
+
 						switch (pos) {
 						case 0:
-							
+
 							break;
 						case 1:
 							startActivity(new Intent(getActivity(),
@@ -100,49 +98,48 @@ public class secondFragment extends android.support.v4.app.Fragment implements
 						case 3:
 							break;
 						case 4:
+							startActivity(new Intent(getActivity(),
+									shezhiWifi.class));
 							break;
 						case 5:
 							break;
 						}
-						
+
 					}
 
 					@Override
 					public void onmenucentre(View view) {
 						// TODO Auto-generated method stub
-//						Toast.makeText(myApplication.GetContext(), "centre",
-//								Toast.LENGTH_LONG).show();
-//						send("123456");
-						 if (Mysocket.getState() == 0) {
-						 connectServer();
-						 Toast.makeText(getActivity(), "wifi已连接!", Toast.LENGTH_SHORT)
-						 .show();
-						 } else {
-						 Toast.makeText(getActivity(), "当前wifi已经连接!", Toast.LENGTH_SHORT)
-						 .show();
-						 }
+						// if (Mysocket.getState() == 0) {
+						// // connectServer();
+						//
+						// } else {
+						// Toast.makeText(getActivity(), "当前wifi已经连接!",
+						// Toast.LENGTH_SHORT)
+						// .show();
+						// }
 					}
 				});
 		// shezhi.setOnClickListener(this);
 		return v;
 	}
 
-	public void connectServer() {
-		Mysocket.connectServer(myHandler, new MysocketInterface() {
-
-			@Override
-			public void onsuccess(Socket socket) {
-				mysocket = socket;
-				
-			}
-
-			@Override
-			public void onfailued(Socket socket) {
-				
-			}
-		});
-
-	}
+	// public void connectServer() {
+	// Mysocket.connectServer(myHandler, new MysocketInterface() {
+	//
+	// @Override
+	// public void onsuccess(Socket socket) {
+	// mysocket = socket;
+	//
+	// }
+	//
+	// @Override
+	// public void onfailued(Socket socket) {
+	//
+	// }
+	// });
+	//
+	// }
 
 	private class MyReceiverRunnable implements Runnable {
 

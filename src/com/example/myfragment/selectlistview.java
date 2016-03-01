@@ -10,15 +10,13 @@ import me.maxwin.view.IXListViewRefreshListener;
 import me.maxwin.view.XListView;
 
 import com.example.adapter.FoodsItemAdapter;
-import com.example.db.NewsItemDao;
 import com.example.httputil.CommonException;
 import com.example.httputil.FoodsItem;
 import com.example.httputil.FoodsItemBiz;
-import com.example.httputil.NewsItem;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myactivity.teachcontent;
 import com.example.myfragment.foodFragment.LoadDatasTask;
-import com.example.netutil.NetUtil;
+import com.example.utils.NetUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -44,14 +42,13 @@ public class selectlistview extends Fragment implements
 	private boolean firstin = true;
 	private int currentPage = 1;
 	private int flag;
-	private int leixing=0;
-	
+	private int leixing = 0;
 
 	@SuppressLint("ValidFragment")
-	public selectlistview(String link,int leixing) {
+	public selectlistview(String link, int leixing) {
 		super();
 		this.link = link;
-		this.leixing=leixing;
+		this.leixing = leixing;
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,11 +73,11 @@ public class selectlistview extends Fragment implements
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				List<FoodsItem> mDatas = mAdapter.returnmDatas();
-				FoodsItem newitem = mDatas.get(position-1);
-				Intent intent = new Intent(getActivity(), teachcontent.class);
-				intent.putExtra("url", newitem.getLink());
-				Bundle bundle=new Bundle();
+				FoodsItem fooditem = mDatas.get(position - 1);
+				Intent intent = new Intent(getActivity(), teachcontent.class);				
+				Bundle bundle = new Bundle();
 				bundle.putInt("flag", flag);
+				bundle.putSerializable("fooditem", fooditem);
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}
@@ -116,8 +113,7 @@ public class selectlistview extends Fragment implements
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			try {
-				foodsItems1 = mFoodsItemBiz
-						.getNewsItems(link+"1",leixing);
+				foodsItems1 = mFoodsItemBiz.getNewsItems(link + "1", leixing);
 			} catch (CommonException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -151,9 +147,8 @@ public class selectlistview extends Fragment implements
 				currentPage += 1;
 				Log.i("currentPage", String.valueOf(currentPage));
 				try {
-					foodlist = mFoodsItemBiz
-							.getNewsItems(link
-									+ String.valueOf(currentPage),0);
+					foodlist = mFoodsItemBiz.getNewsItems(
+							link + String.valueOf(currentPage), 0);
 					mAdapter.addAll(foodlist);
 
 				} catch (CommonException e) {

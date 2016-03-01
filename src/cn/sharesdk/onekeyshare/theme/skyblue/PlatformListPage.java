@@ -22,12 +22,14 @@ import cn.sharesdk.onekeyshare.PlatformListFakeActivity;
 import static cn.sharesdk.framework.utils.ShareSDKR.getLayoutRes;
 import static cn.sharesdk.framework.utils.ShareSDKR.getStringRes;
 
-public class PlatformListPage extends PlatformListFakeActivity implements View.OnClickListener {
+public class PlatformListPage extends PlatformListFakeActivity implements
+		View.OnClickListener {
 	private PlatformGridViewAdapter gridViewAdapter;
 
 	public void onCreate() {
 		super.onCreate();
-		activity.setContentView(getLayoutRes(activity, "ssdk_oks_skyblue_share_platform_list"));
+		activity.setContentView(getLayoutRes(activity,
+				"ssdk_oks_skyblue_share_platform_list"));
 
 		initView();
 	}
@@ -63,27 +65,30 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 
 	public void onClick(View v) {
 		Object tag = v.getTag();
-		if(tag == null || !(tag instanceof Integer))
+		if (tag == null || !(tag instanceof Integer))
 			return;
 
-		switch ((Integer)tag) {
-			case android.R.string.cancel:
-				setCanceled(true);
-				finish();
-				break;
-			case android.R.string.ok:
-				onShareButtonClick(v);
-				break;
+		switch ((Integer) tag) {
+		case android.R.string.cancel:
+			setCanceled(true);
+			finish();
+			break;
+		case android.R.string.ok:
+			onShareButtonClick(v);
+			break;
 		}
 	}
 
 	private void onShareButtonClick(View v) {
-		if(gridViewAdapter == null || "locked".equals(v.getTag()))
+		if (gridViewAdapter == null || "locked".equals(v.getTag()))
 			return;
 
 		List<Object> checkedPlatforms = gridViewAdapter.getCheckedItems();
-		if(checkedPlatforms.size() == 0){
-			Toast.makeText(activity, getStringRes(activity, "ssdk_oks_select_one_plat_at_least"), Toast.LENGTH_SHORT).show();
+		if (checkedPlatforms.size() == 0) {
+			Toast.makeText(
+					activity,
+					getStringRes(activity, "ssdk_oks_select_one_plat_at_least"),
+					Toast.LENGTH_SHORT).show();
 			return;
 		}
 

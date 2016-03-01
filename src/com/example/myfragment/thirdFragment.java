@@ -22,15 +22,12 @@ import com.example.httputil.FoodFuliao;
 import com.example.httputil.Foodcontent;
 import com.example.httputil.FoodsItem;
 import com.example.httputil.FoodsItemBiz;
-import com.example.httputil.News;
 import com.example.httputil.SliderShowViewItem;
 import com.example.httputil.SliderShowViewItemBiz;
-import com.example.httputil.News.NewsType;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.other.StringtoURL;
 
-
-import com.example.paintcanvas.SlidingMenu;
+import com.example.ui.SlidingMenu;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -49,12 +46,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 public class thirdFragment extends android.support.v4.app.Fragment {
-	
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.thirdfragment, container, false);
-	
+
 		return v;
 	}
 

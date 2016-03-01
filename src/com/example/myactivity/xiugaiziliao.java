@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.other.Const;
 import com.example.other.ServerUtils;
 import com.example.other.StringtoURL;
@@ -45,18 +43,19 @@ public class xiugaiziliao extends Activity implements OnClickListener {
 	String userid;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private DisplayImageOptions options;
-	String path=null;
+	String path = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.xiugaiziliao);
 		houtui = (ImageView) findViewById(R.id.xiugaiziliao_houtui);
 		xiugai_touxiang = findViewById(R.id.xiugai_touxiang);
-		touxiang=(ImageView) findViewById(R.id.touxiang);
+		touxiang = (ImageView) findViewById(R.id.touxiang);
 		houtui.setOnClickListener(this);
 		xiugai_touxiang.setOnClickListener(this);
-		imageLoader.init(ImageLoaderConfiguration.createDefault((xiugaiziliao.this)));
-		userid=getIntent().getStringExtra("userid");
+		imageLoader.init(ImageLoaderConfiguration
+				.createDefault((xiugaiziliao.this)));
+		userid = getIntent().getStringExtra("userid");
 		Log.i("123", "123");
 		options = new DisplayImageOptions.Builder()
 				.showStubImage(R.drawable.xiaolian)
@@ -66,8 +65,8 @@ public class xiugaiziliao extends Activity implements OnClickListener {
 				.displayer(new FadeInBitmapDisplayer(300)).build();
 		imageLoader.clearMemoryCache();
 		imageLoader.clearDiscCache();
-		imageLoader.displayImage(Const.DOWNLOAD_URL+userid+"/touxiang.jpg", touxiang,
-					options);
+		imageLoader.displayImage(Const.DOWNLOAD_URL + userid + "/touxiang.jpg",
+				touxiang, options);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -111,7 +110,7 @@ public class xiugaiziliao extends Activity implements OnClickListener {
 			int column_index = cursor
 					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 			cursor.moveToFirst();
-		    path = cursor.getString(column_index);// 图片在的路径
+			path = cursor.getString(column_index);// 图片在的路径
 			new xiugaitupianTask().execute();
 			break;
 		default:
@@ -119,29 +118,29 @@ public class xiugaiziliao extends Activity implements OnClickListener {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
-	class xiugaitupianTask extends AsyncTask<Void, Void, Void>
-	{
+
+	class xiugaitupianTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			Log.i("username", getIntent().getStringExtra("username"));
-			result = ServerUtils.formUpload(Const.UPLOAD_URL+"?&username="+userid, path);
-			Log.e("jj", "result:" + result);	
+			result = ServerUtils.formUpload(Const.UPLOAD_URL + "?&username="
+					+ userid, path);
+			Log.e("jj", "result:" + result);
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			imageLoader.clearMemoryCache();
 			imageLoader.clearDiscCache();
-			imageLoader.displayImage(Const.DOWNLOAD_URL+userid+"/touxiang.jpg", touxiang,
-						options);
+			imageLoader.displayImage(Const.DOWNLOAD_URL + userid
+					+ "/touxiang.jpg", touxiang, options);
 			super.onPostExecute(result);
 		}
-		
+
 	}
 
 }

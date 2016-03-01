@@ -34,7 +34,7 @@ public class PlatformListFakeActivity extends FakeActivity {
 
 		canceled = false;
 
-		if(themeShareCallback == null) {
+		if (themeShareCallback == null) {
 			finish();
 		}
 	}
@@ -109,7 +109,8 @@ public class PlatformListFakeActivity extends FakeActivity {
 		return onShareButtonClickListener;
 	}
 
-	public void setOnShareButtonClickListener(OnShareButtonClickListener onShareButtonClickListener) {
+	public void setOnShareButtonClickListener(
+			OnShareButtonClickListener onShareButtonClickListener) {
 		this.onShareButtonClickListener = onShareButtonClickListener;
 	}
 
@@ -131,27 +132,27 @@ public class PlatformListFakeActivity extends FakeActivity {
 
 	protected void onShareButtonClick(View v, List<Object> checkedPlatforms) {
 
-		if(onShareButtonClickListener != null) {
+		if (onShareButtonClickListener != null) {
 			onShareButtonClickListener.onClick(v, checkedPlatforms);
 		}
 
-		HashMap<Platform, HashMap<String, Object>> silentShareData = new HashMap<Platform, HashMap<String,Object>>();
+		HashMap<Platform, HashMap<String, Object>> silentShareData = new HashMap<Platform, HashMap<String, Object>>();
 		final List<Platform> supportEditPagePlatforms = new ArrayList<Platform>();
 
 		Platform plat;
 		HashMap<String, Object> shareParam;
-		for(Object item : checkedPlatforms) {
-			if(item instanceof CustomerLogo){
-				CustomerLogo customerLogo = (CustomerLogo)item;
+		for (Object item : checkedPlatforms) {
+			if (item instanceof CustomerLogo) {
+				CustomerLogo customerLogo = (CustomerLogo) item;
 				customerLogo.listener.onClick(v);
 				continue;
 			}
 
-			plat = (Platform)item;
+			plat = (Platform) item;
 			String name = plat.getName();
 
 			// EditPage不支持微信平台、Google+、QQ分享、Pinterest、信息和邮件，总是执行直接分享
-			if(silent || ShareCore.isDirectShare(plat)) {
+			if (silent || ShareCore.isDirectShare(plat)) {
 				shareParam = new HashMap<String, Object>(shareParamsMap);
 				shareParam.put("platform", name);
 				silentShareData.put(plat, shareParam);
@@ -164,7 +165,7 @@ public class PlatformListFakeActivity extends FakeActivity {
 		}
 
 		// 跳转EditPage分享
-		if(supportEditPagePlatforms.size() > 0) {
+		if (supportEditPagePlatforms.size() > 0) {
 			showEditPage(supportEditPagePlatforms);
 		}
 
@@ -186,9 +187,12 @@ public class PlatformListFakeActivity extends FakeActivity {
 		ShareSDK.logDemoEvent(3, null);
 
 		EditPageFakeActivity editPageFakeActivity;
-		String editPageClass = ((Object)this).getClass().getPackage().getName()+".EditPage";
+		String editPageClass = ((Object) this).getClass().getPackage()
+				.getName()
+				+ ".EditPage";
 		try {
-			editPageFakeActivity = (EditPageFakeActivity) Class.forName(editPageClass).newInstance();
+			editPageFakeActivity = (EditPageFakeActivity) Class.forName(
+					editPageClass).newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -202,12 +206,12 @@ public class PlatformListFakeActivity extends FakeActivity {
 		}
 		editPageFakeActivity.showForResult(context, null, new FakeActivity() {
 			public void onResult(HashMap<String, Object> data) {
-				if(data == null)
+				if (data == null)
 					return;
 				if (data.containsKey("editRes")) {
 					@SuppressWarnings("unchecked")
-					HashMap<Platform, HashMap<String, Object>> editRes
-							= (HashMap<Platform, HashMap<String, Object>>) data.get("editRes");
+					HashMap<Platform, HashMap<String, Object>> editRes = (HashMap<Platform, HashMap<String, Object>>) data
+							.get("editRes");
 					themeShareCallback.doShare(editRes);
 				}
 			}

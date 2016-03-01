@@ -6,12 +6,12 @@ public class SliderShowViewItem {
 	 * Á´½Ó
 	 */
 	private String link;
-	
+
 	/**
 	 * Í¼Æ¬µÄÁ´½Ó
 	 */
 	private String imgLink;
-	
+
 	private String foodname;
 
 	public String getFoodname() {
@@ -37,5 +37,5 @@ public class SliderShowViewItem {
 	public void setImgLink(String imgLink) {
 		this.imgLink = imgLink;
 	}
-	
+
 }

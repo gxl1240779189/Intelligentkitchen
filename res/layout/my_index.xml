@@ -90,7 +90,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/my_index_item_order"
+            android:id="@+id/shoucang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_space"
@@ -101,77 +101,6 @@
             android:gravity="center_vertical"
             android:padding="@dimen/normal_space"
             android:text="我的收藏"
-            android:textSize="@dimen/text_size_defalut" />
-
-        <TextView
-            android:id="@+id/my_index_item_wallet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1px"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/usercenter_feed"
-            android:drawablePadding="@dimen/normal_space"
-            android:drawableRight="@drawable/arrow_normal"
-            android:gravity="center_vertical"
-            android:padding="@dimen/normal_space"
-            android:text="我的动态"
-            android:textSize="@dimen/text_size_defalut" />
-
-        <TextView
-            android:id="@+id/my_index_item_review"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/normal_space"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/usercenter_recipe"
-            android:drawablePadding="@dimen/normal_space"
-            android:drawableRight="@drawable/arrow_normal"
-            android:gravity="center_vertical"
-            android:padding="@dimen/normal_space"
-            android:text="菜谱"
-            android:textSize="@dimen/text_size_defalut" />
-
-        <TextView
-            android:id="@+id/my_index_item_day_recommend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="1px"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/usercenter_pai"
-            android:drawablePadding="@dimen/normal_space"
-            android:drawableRight="@drawable/arrow_normal"
-            android:gravity="center_vertical"
-            android:padding="@dimen/normal_space"
-            android:text="话题"
-            android:textSize="@dimen/text_size_defalut" />
-
-        <TextView
-            android:id="@+id/my_index_item_history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/usercenter_blog"
-            android:drawablePadding="@dimen/normal_space"
-            android:drawableRight="@drawable/arrow_normal"
-            android:gravity="center_vertical"
-            android:padding="@dimen/normal_space"
-            android:text="日志"
-            android:textSize="@dimen/text_size_defalut" />
-
-        <TextView
-            android:id="@+id/my_index_item_setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="@dimen/normal_space"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/usercenter_draft"
-            android:drawablePadding="@dimen/normal_space"
-            android:drawableRight="@drawable/arrow_normal"
-            android:gravity="center_vertical"
-            android:padding="@dimen/normal_space"
-            android:text="草稿箱"
             android:textSize="@dimen/text_size_defalut" />
     </LinearLayout>
 

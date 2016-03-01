@@ -5,7 +5,7 @@ import cn.smssdk.SMSSDK;
 
 import com.example.broadcastreceiver.SMS_receiver;
 import com.example.httputil.User;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myinterface.duanxinglistener;
 import com.example.other.fuwuqiurl;
 import com.google.gson.Gson;
@@ -35,9 +35,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	public EditText register_upass;
 	public Button register_btn;
 	public Button register_get_check_pass;
-	public EventHandler eh ;
+	public EventHandler eh;
 	public SMS_receiver broadreceiver;
-
 
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,10 +49,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		register_upass = (EditText) findViewById(R.id.register_upass);
 		register_btn = (Button) findViewById(R.id.register_btn);
 		register_get_check_pass = (Button) findViewById(R.id.register_get_check_pass);
-		broadreceiver=new SMS_receiver();
-		registerReceiver(broadreceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+		broadreceiver = new SMS_receiver();
+		registerReceiver(broadreceiver, new IntentFilter(
+				"android.provider.Telephony.SMS_RECEIVED"));
 		broadreceiver.setlistener(new duanxinglistener() {
-			
+
 			@Override
 			public void get_haoma(String msg) {
 				register_check_upass.setText(msg);
@@ -76,14 +76,14 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		case R.id.register_get_check_pass:
 			SendsmsRandom();
 			break;
-			
+
 		case R.id.register_btn:
 			confirmsms();
 			break;
 		}
 	}
 
-	public void SendsmsRandom() {	
+	public void SendsmsRandom() {
 		eh = new EventHandler() {
 
 			@Override
@@ -93,20 +93,30 @@ public class RegisterActivity extends Activity implements OnClickListener {
 					// 回调完成
 					if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
 						System.out.println("提交验证码成功");
-						new HttpUtils().send(HttpMethod.GET,
-								fuwuqiurl.denglu + "?&username=" + register_phone.getText().toString() + "&password="
-										+ register_upass.getText().toString(), new RequestCallBack<String>() {
+						new HttpUtils().send(HttpMethod.GET, fuwuqiurl.denglu
+								+ "?&username="
+								+ register_phone.getText().toString()
+								+ "&password="
+								+ register_upass.getText().toString(),
+								new RequestCallBack<String>() {
 
 									@Override
-									public void onFailure(HttpException arg0, String arg1) {					
-										Toast.makeText(RegisterActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+									public void onFailure(HttpException arg0,
+											String arg1) {
+										Toast.makeText(RegisterActivity.this,
+												"登录失败", Toast.LENGTH_SHORT)
+												.show();
 									}
 
 									@Override
-									public void onSuccess(ResponseInfo<String> arg0) {
-								         Gson gson=new GsonBuilder().create();
-								         User object=gson.fromJson(arg0.result,User.class);								       
-								         Toast.makeText(RegisterActivity.this, object.getUsername(), Toast.LENGTH_SHORT).show();
+									public void onSuccess(
+											ResponseInfo<String> arg0) {
+										Gson gson = new GsonBuilder().create();
+										User object = gson.fromJson(
+												arg0.result, User.class);
+										Toast.makeText(RegisterActivity.this,
+												object.getUsername(),
+												Toast.LENGTH_SHORT).show();
 									}
 								});
 					} else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
@@ -122,13 +132,14 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		SMSSDK.registerEventHandler(eh); // 注册短信回调
 		SMSSDK.getVerificationCode("86", register_phone.getText().toString());
 	}
-	
-	public void confirmsms()
-	{
-		SMSSDK.submitVerificationCode("86", register_phone.getText().toString(), register_check_upass.getText().toString());
-		
+
+	public void confirmsms() {
+		SMSSDK.submitVerificationCode("86",
+				register_phone.getText().toString(), register_check_upass
+						.getText().toString());
+
 	}
-	
+
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();

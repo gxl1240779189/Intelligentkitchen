@@ -10,9 +10,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
-
-
 public class ServerUtils {
 
 	/**
@@ -80,7 +77,8 @@ public class ServerUtils {
 
 			// 读取返回数据
 			StringBuffer buffer = new StringBuffer();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					conn.getInputStream(), "utf-8"));
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				buffer.append(line).append("\n");

@@ -1,15 +1,14 @@
 package com.example.httputil;
 
-
 public class ResponseObject<T> {
 
 	private int state;
 	private T datas;
-	
+
 	public ResponseObject() {
-		
+
 	}
-	
+
 	public ResponseObject(int state, T datas) {
 		super();
 		this.state = state;
@@ -31,5 +30,5 @@ public class ResponseObject<T> {
 	public void setDatas(T datas) {
 		this.datas = datas;
 	}
-	
+
 }

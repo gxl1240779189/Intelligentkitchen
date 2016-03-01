@@ -32,7 +32,8 @@ import static cn.sharesdk.framework.utils.ShareSDKR.getBitmapRes;
 import static cn.sharesdk.framework.utils.ShareSDKR.getIdRes;
 import static cn.sharesdk.framework.utils.ShareSDKR.getLayoutRes;
 
-public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClickListener {
+public class PlatformGridViewAdapter extends BaseAdapter implements
+		View.OnClickListener {
 
 	private final Context context;
 	private List<Object> logos = new ArrayList<Object>();
@@ -68,12 +69,17 @@ public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClick
 	@Override
 	public View getView(int position, View view, ViewGroup viewGroup) {
 		ViewHolder viewHolder;
-		if(view == null) {
-			view = LayoutInflater.from(context).inflate(getLayoutRes(context, "ssdk_oks_skyblue_share_platform_list_item"), null);
+		if (view == null) {
+			view = LayoutInflater.from(context).inflate(
+					getLayoutRes(context,
+							"ssdk_oks_skyblue_share_platform_list_item"), null);
 			viewHolder = new ViewHolder();
-			viewHolder.checkedImageView = (ImageView) view.findViewById(getIdRes(context, "checkedImageView"));
-			viewHolder.logoImageView = (ImageView) view.findViewById(getIdRes(context, "logoImageView"));
-			viewHolder.nameTextView = (TextView) view.findViewById(getIdRes(context, "nameTextView"));
+			viewHolder.checkedImageView = (ImageView) view
+					.findViewById(getIdRes(context, "checkedImageView"));
+			viewHolder.logoImageView = (ImageView) view.findViewById(getIdRes(
+					context, "logoImageView"));
+			viewHolder.nameTextView = (TextView) view.findViewById(getIdRes(
+					context, "nameTextView"));
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
@@ -83,8 +89,9 @@ public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClick
 		String label;
 		Object item = getItem(position);
 		boolean disabled;
-		boolean isDirectShare = item instanceof Platform ? ShareCore.isDirectShare((Platform) item) : true;
-		if(directOnlyPosition == -1) {
+		boolean isDirectShare = item instanceof Platform ? ShareCore
+				.isDirectShare((Platform) item) : true;
+		if (directOnlyPosition == -1) {
 			disabled = !checkedPositionList.isEmpty() && isDirectShare;
 		} else {
 			disabled = position != directOnlyPosition;
@@ -96,16 +103,22 @@ public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClick
 			view.setOnClickListener(this);
 		} else {
 			CustomerLogo customerLogo = (CustomerLogo) item;
-			logo = disabled ? customerLogo.disableLogo : customerLogo.enableLogo;
+			logo = disabled ? customerLogo.disableLogo
+					: customerLogo.enableLogo;
 			label = customerLogo.label;
 			view.setOnClickListener(this);
-			//TODO 需要整理
-		//	view.setOnClickListener(((CustomerLogo) item).listener);
+			// TODO 需要整理
+			// view.setOnClickListener(((CustomerLogo) item).listener);
 		}
-		String checkedResName = directOnlyPosition != -1 && directOnlyPosition != position ? "ssdk_oks_skyblue_platform_checked_disabled" : "ssdk_oks_skyblue_platform_checked";
+		String checkedResName = directOnlyPosition != -1
+				&& directOnlyPosition != position ? "ssdk_oks_skyblue_platform_checked_disabled"
+				: "ssdk_oks_skyblue_platform_checked";
 		viewHolder.position = position;
-		viewHolder.checkedImageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), getBitmapRes(context, checkedResName)));
-		viewHolder.checkedImageView.setVisibility(checkedPositionList.contains(viewHolder.position) ? View.VISIBLE : View.GONE);
+		viewHolder.checkedImageView.setImageBitmap(BitmapFactory
+				.decodeResource(context.getResources(),
+						getBitmapRes(context, checkedResName)));
+		viewHolder.checkedImageView.setVisibility(checkedPositionList
+				.contains(viewHolder.position) ? View.VISIBLE : View.GONE);
 		viewHolder.nameTextView.setText(label);
 		viewHolder.logoImageView.setImageBitmap(logo);
 
@@ -116,38 +129,40 @@ public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClick
 	public void onClick(View view) {
 		ViewHolder viewHolder = (ViewHolder) view.getTag();
 		Integer position = viewHolder.position;
-		//直接分享平台选中后，其它的不可用
-		if(directOnlyPosition != -1 && position != directOnlyPosition)
+		// 直接分享平台选中后，其它的不可用
+		if (directOnlyPosition != -1 && position != directOnlyPosition)
 			return;
 
 		Object item = getItem(position);
 		boolean direct = false;
-		//normal platform
-		if(item instanceof Platform){
+		// normal platform
+		if (item instanceof Platform) {
 			direct = ShareCore.isDirectShare((Platform) item);
-		}else{
-			//自定义图标
+		} else {
+			// 自定义图标
 			direct = true;
 		}
-		//EditPage Platforms only
-		if(direct && directOnlyPosition == -1 && !checkedPositionList.isEmpty())
+		// EditPage Platforms only
+		if (direct && directOnlyPosition == -1
+				&& !checkedPositionList.isEmpty())
 			return;
 
-		if(checkedPositionList.contains(position)) {
+		if (checkedPositionList.contains(position)) {
 			checkedPositionList.remove(position);
-			if(direct)
+			if (direct)
 				directOnlyPosition = -1;
 		} else {
 			checkedPositionList.add(position);
-			if(direct)
+			if (direct)
 				directOnlyPosition = position;
 		}
 
 		notifyDataSetChanged();
 	}
 
-	public void setData(Platform[] platforms, HashMap<String, String> hiddenPlatforms) {
-		if(platforms == null)
+	public void setData(Platform[] platforms,
+			HashMap<String, String> hiddenPlatforms) {
+		if (platforms == null)
 			return;
 		if (hiddenPlatforms != null && hiddenPlatforms.size() > 0) {
 			ArrayList<Platform> ps = new ArrayList<Platform>();
@@ -167,7 +182,7 @@ public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClick
 	}
 
 	public void setCustomerLogos(ArrayList<CustomerLogo> customers) {
-		if(customers == null || customers.size() == 0)
+		if (customers == null || customers.size() == 0)
 			return;
 		logos.addAll(customers);
 	}
@@ -175,13 +190,13 @@ public class PlatformGridViewAdapter extends BaseAdapter implements View.OnClick
 	public List<Object> getCheckedItems() {
 		ArrayList<Object> list = new ArrayList<Object>();
 
-		if(directOnlyPosition != -1) {
+		if (directOnlyPosition != -1) {
 			list.add(getItem(directOnlyPosition));
 			return list;
 		}
 
 		Object item;
-		for(Integer position : checkedPositionList) {
+		for (Integer position : checkedPositionList) {
 			item = getItem(position);
 			list.add(item);
 		}

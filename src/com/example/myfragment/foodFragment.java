@@ -11,18 +11,15 @@ import me.maxwin.view.IXListViewRefreshListener;
 import me.maxwin.view.XListView;
 
 import com.example.adapter.FoodsItemAdapter;
-import com.example.adapter.NewsItemAdapter;
-import com.example.db.NewsItemDao;
 import com.example.httputil.CommonException;
 import com.example.httputil.FoodsItem;
 import com.example.httputil.FoodsItemBiz;
-import com.example.httputil.NewsItem;
-import com.example.httputil.NewsItemBiz;
 import com.example.httputil.SliderShowViewItem;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myactivity.GridviewItem;
+import com.example.myactivity.loveFood;
 import com.example.myactivity.teachcontent;
-import com.example.netutil.NetUtil;
+import com.example.utils.NetUtil;
 import com.example.slideshowdemo.customview.SlideShowView;
 
 import android.content.Intent;
@@ -57,24 +54,25 @@ public class foodFragment extends Fragment implements
 			R.drawable.recipe_lable_1_2, R.drawable.recipe_lable_2_1,
 			R.drawable.recipe_lable_2_3, R.drawable.recipe_lable_4_1,
 			R.drawable.recipe_lable_5_2 };
-	private String[] iconName = { "家常菜谱", "中华菜系", "各地小吃", "外国菜谱", "烘焙", "我的菜谱" };
+	private String[] iconName = { "家常菜谱", "中华菜系", "各地小吃", "外国菜谱", "烘焙", "我的收藏" };
 	private List<Map<String, Object>> data_list;
 	private SimpleAdapter sim_adapter;
 	private EditText search;
 	private FrameLayout slideshowview_framelayout;
 	private SlideShowView slideshowview;
-//	private SlideShowView slideshowview;
 	private List<ImageView> imageViewsList;
 	private LinearLayout foodfragmenthead;
 	public List<SliderShowViewItem> list = new ArrayList<SliderShowViewItem>();
 	private int currentPage = 1;
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.news_fragment, container, false);
-		foodfragmenthead=(LinearLayout) inflater.inflate(R.layout.foodfragment_head, null);
+		foodfragmenthead = (LinearLayout) inflater.inflate(
+				R.layout.foodfragment_head, null);
 		mAdapter = new FoodsItemAdapter(getActivity(), foodlist);
 		mFoodsItemBiz = new FoodsItemBiz();
-		slideshowview=new SlideShowView(getActivity());
+		slideshowview = new SlideShowView(getActivity());
 		mXListView = (XListView) v.findViewById(R.id.xListView);
 		mXListView.addHeaderView(foodfragmenthead);
 		gridview = (GridView) foodfragmenthead.findViewById(R.id.gridview);
@@ -103,9 +101,12 @@ public class foodFragment extends Fragment implements
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				List<FoodsItem> mDatas = mAdapter.returnmDatas();
-				FoodsItem newitem = mDatas.get(position - 2);
+				FoodsItem fooditem = mDatas.get(position - 2);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("fooditem", fooditem);
 				Intent intent = new Intent(getActivity(), teachcontent.class);
-				intent.putExtra("url", newitem.getLink());
+				// intent.putExtra("url", fooditem.getLink());
+				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
@@ -114,12 +115,19 @@ public class foodFragment extends Fragment implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(getActivity(), GridviewItem.class);
-				Bundle bundle=new Bundle();
-				bundle.putInt("position", position);
-				Log.i("position", String.valueOf(position));
-				intent.putExtras(bundle);
-				startActivity(intent);
+				if (position == 5) {
+					Intent intent=new Intent(getActivity(),
+							loveFood.class);
+					startActivity(intent);
+				} else {
+					Intent intent = new Intent(getActivity(),
+							GridviewItem.class);
+					Bundle bundle = new Bundle();
+					bundle.putInt("position", position);
+					Log.i("position", String.valueOf(position));
+					intent.putExtras(bundle);
+					startActivity(intent);
+				}
 			}
 		});
 		return v;
@@ -127,7 +135,7 @@ public class foodFragment extends Fragment implements
 
 	@Override
 	public void onLoadMore() {
-			new loadmore().execute();
+		new loadmore().execute();
 	}
 
 	public void getData() {
@@ -155,7 +163,7 @@ public class foodFragment extends Fragment implements
 				mAdapter.setDatas(foodsItems1);
 				mAdapter.notifyDataSetChanged();
 			}
-//			setListViewHeightBasedOnChildren(mXListView);
+			// setListViewHeightBasedOnChildren(mXListView);
 			mXListView.stopRefresh();
 		}
 
@@ -164,7 +172,9 @@ public class foodFragment extends Fragment implements
 			// TODO Auto-generated method stub
 			try {
 				foodsItems1 = mFoodsItemBiz
-						.getNewsItems("http://www.meishij.net/list.php?sortby=update&lm=13&page=1",0);
+						.getNewsItems(
+								"http://www.meishij.net/list.php?sortby=update&lm=13&page=1",
+								0);
 			} catch (CommonException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -176,7 +186,7 @@ public class foodFragment extends Fragment implements
 		}
 
 	}
-	
+
 	class loadmore extends AsyncTask<Void, Void, Void> {
 
 		protected void onPostExecute(Void result) {
@@ -198,9 +208,9 @@ public class foodFragment extends Fragment implements
 				currentPage += 1;
 				Log.i("currentPage", String.valueOf(currentPage));
 				try {
-					foodlist = mFoodsItemBiz
-							.getNewsItems("http://www.meishij.net/list.php?sortby=update&lm=13&page="
-									+ String.valueOf(currentPage),0);
+					foodlist = mFoodsItemBiz.getNewsItems(
+							"http://www.meishij.net/list.php?sortby=update&lm=13&page="
+									+ String.valueOf(currentPage), 0);
 					mAdapter.addAll(foodlist);
 
 				} catch (CommonException e) {
@@ -234,12 +244,11 @@ public class foodFragment extends Fragment implements
 			listItem.measure(0, 0);
 			totalHeight += listItem.getMeasuredHeight();
 		}
-		Log.i("listAdapter.getCount()", listAdapter.getCount()+"");
+		Log.i("listAdapter.getCount()", listAdapter.getCount() + "");
 		ViewGroup.LayoutParams params = listView.getLayoutParams();
 		params.height = totalHeight
 				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 	}
-
 
 }

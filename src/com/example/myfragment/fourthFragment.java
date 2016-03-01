@@ -1,8 +1,8 @@
 package com.example.myfragment;
 
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myactivity.dengluActivity;
+import com.example.myactivity.loveFood;
 import com.example.other.Const;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -28,9 +28,10 @@ public class fourthFragment extends android.support.v4.app.Fragment implements
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private DisplayImageOptions options;
 	private ImageView touxiang;
-	private Boolean shifoudenglu=false;
+	private Boolean shifoudenglu = false;
 	private String username;
 	private String userid;
+	private TextView shoucang;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +39,8 @@ public class fourthFragment extends android.support.v4.app.Fragment implements
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(R.layout.my_index, container, false);
 		imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
+		shoucang=(TextView) v.findViewById(R.id.shoucang);
+		shoucang.setOnClickListener(this);
 		Log.i("123", "123");
 		options = new DisplayImageOptions.Builder()
 				.showStubImage(R.drawable.ic_empty_dish)
@@ -45,7 +48,7 @@ public class fourthFragment extends android.support.v4.app.Fragment implements
 				.showImageOnFail(R.drawable.ic_empty_dish).cacheInMemory()
 				.cacheOnDisc().displayer(new RoundedBitmapDisplayer(20))
 				.displayer(new FadeInBitmapDisplayer(300)).build();
-		touxiang=(ImageView) v.findViewById(R.id.my_index_login_image);
+		touxiang = (ImageView) v.findViewById(R.id.my_index_login_image);
 		denglu = (TextView) v.findViewById(R.id.my_index_login_text);
 		xiugaiziliao = (ImageView) v.findViewById(R.id.xiugaiziliao);
 		denglu.setOnClickListener(this);
@@ -63,18 +66,22 @@ public class fourthFragment extends android.support.v4.app.Fragment implements
 			break;
 
 		case R.id.xiugaiziliao:
-			if(shifoudenglu)
-			{
-			Intent intent=new Intent(getActivity(),com.example.myactivity.xiugaiziliao.class);
-			intent.putExtra("username", username);
-			intent.putExtra("userid", userid);
-			startActivityForResult(intent,2);
-			}else
-			{
-				Toast.makeText(getActivity(), "修改资料,请先登录!", Toast.LENGTH_SHORT).show();
+			if (shifoudenglu) {
+				Intent intent = new Intent(getActivity(),
+						com.example.myactivity.xiugaiziliao.class);
+				intent.putExtra("username", username);
+				intent.putExtra("userid", userid);
+				startActivityForResult(intent, 2);
+			} else {
+				Toast.makeText(getActivity(), "修改资料,请先登录!", Toast.LENGTH_SHORT)
+						.show();
 				startActivityForResult(new Intent(getActivity(),
 						dengluActivity.class), 1);
 			}
+			break;
+			
+		case R.id.shoucang:
+			startActivity(new Intent(getActivity(),loveFood.class));
 			break;
 		}
 	}
@@ -85,25 +92,24 @@ public class fourthFragment extends android.support.v4.app.Fragment implements
 		case 1:
 			if (resultCode == 1) {
 				username = data.getStringExtra("username");
-				userid=data.getStringExtra("userid");
+				userid = data.getStringExtra("userid");
 				denglu.setText(username);
-			    shifoudenglu=true;	
+				shifoudenglu = true;
 				imageLoader.clearMemoryCache();
 				imageLoader.clearDiscCache();
-				imageLoader.displayImage(Const.DOWNLOAD_URL+userid+"/touxiang.jpg", touxiang,
-							options);
+				imageLoader.displayImage(Const.DOWNLOAD_URL + userid
+						+ "/touxiang.jpg", touxiang, options);
 			}
 
 			break;
 
-	   case 2:
-		   if(resultCode ==2)
-		   {
-			   imageLoader.clearMemoryCache();
-			   imageLoader.clearDiscCache();
-			   imageLoader.displayImage(Const.DOWNLOAD_URL+userid+"/touxiang.jpg", touxiang,
-							options);
-		   }
+		case 2:
+			if (resultCode == 2) {
+				imageLoader.clearMemoryCache();
+				imageLoader.clearDiscCache();
+				imageLoader.displayImage(Const.DOWNLOAD_URL + userid
+						+ "/touxiang.jpg", touxiang, options);
+			}
 			break;
 		}
 	}

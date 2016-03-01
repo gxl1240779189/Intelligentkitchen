@@ -1,7 +1,6 @@
 package com.example.myactivity;
 
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myfragment.fourthFragment;
 import com.example.myfragment.secondFragment;
 import com.example.myfragment.selectlistview;
@@ -39,30 +38,30 @@ public class GridviewItem extends FragmentActivity implements OnClickListener {
 			"http://www.meishij.net/list.php?sortby=update&lm=2&page=",
 			"http://www.meishij.net/list.php?sortby=update&lm=3&page=",
 			"http://www.meishij.net/list.php?sortby=update&lm=10&page=",
-			"http://www.meishij.net/list.php?sortby=update&lm=369&page="};
+			"http://www.meishij.net/list.php?sortby=update&lm=369&page=" };
 	public String[] zuirei_url_array = {
 			"http://www.meishij.net/list.php?sortby=renqi&lm=13&page=",
 			"http://www.meishij.net/list.php?sortby=renqi&lm=2&page=",
 			"http://www.meishij.net/list.php?sortby=renqi&lm=3&page=",
 			"http://www.meishij.net/list.php?sortby=renqi&lm=10&page=",
-			"http://www.meishij.net/list.php?sortby=renqi&lm=369&page="};
-	
-	public String[] title={"�ҳ�����","�л���ϵ","����С��","������","�決","�ҵĲ���"};
+			"http://www.meishij.net/list.php?sortby=renqi&lm=369&page=" };
+
+	public String[] title = { "家常菜谱", "中华菜系", "各地小吃", "外国菜谱", "烘焙", "我的收藏" };
 	public int posite;
 
-	public  void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.select_title);
-		posite=getIntent().getExtras().getInt("position");
-		listview_zuixing = new selectlistview(zuixing_url_array[posite],0);
+		posite = getIntent().getExtras().getInt("position");
+		listview_zuixing = new selectlistview(zuixing_url_array[posite], 0);
 		page1view = findViewById(R.id.page1);
 		page2view = findViewById(R.id.page2);
 		houtui = (ImageView) findViewById(R.id.houtui);
 		page1textview = (TextView) findViewById(R.id.select_page1);
 		page2textview = (TextView) findViewById(R.id.select_page2);
-		Titletextview=(TextView) findViewById(R.id.select_title);
+		Titletextview = (TextView) findViewById(R.id.select_title);
 		page1view.setOnClickListener(this);
 		page2view.setOnClickListener(this);
 		houtui.setOnClickListener(this);
@@ -103,7 +102,8 @@ public class GridviewItem extends FragmentActivity implements OnClickListener {
 			if (listview_zuirei != null) {
 				fragmenttransaction.show(listview_zuirei);
 			} else {
-				listview_zuirei = new selectlistview(zuirei_url_array[posite],0);
+				listview_zuirei = new selectlistview(zuirei_url_array[posite],
+						0);
 				fragmenttransaction.add(R.id.select_content, listview_zuirei);
 			}
 			break;

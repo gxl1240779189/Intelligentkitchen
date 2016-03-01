@@ -32,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="厨乐"
+                android:text="智能厨房"
                 android:textSize="25sp" />
 
             <TextView
@@ -56,6 +56,7 @@
         android:orientation="vertical" >
 
         <RelativeLayout
+            android:id="@+id/shouye"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="center_vertical" >
@@ -66,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/menu_grey" />
+                android:src="@drawable/menu_red" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -85,7 +86,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp" >
+            android:layout_height="80dp" 
+             android:id="@+id/wodeshoucang"
+            >
 
             <ImageView
                 android:id="@+id/two"
@@ -93,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/menu_grey" />
+                android:src="@drawable/shoucang" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -101,7 +104,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="50dp"
                 android:layout_toRightOf="@id/two"
-                android:text="菜谱"
+                android:text="我的收藏"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -112,7 +115,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp" >
+            android:layout_height="80dp" 
+             android:id="@+id/guanyuwomeng"
+            >
 
             <ImageView
                 android:id="@+id/three"
@@ -120,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/menu_grey" />
+                android:src="@drawable/guanyuwomeng" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -128,7 +133,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="50dp"
                 android:layout_toRightOf="@id/three"
-                android:text="话题"
+                android:text="关于我们"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -136,28 +141,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/normal_bg_color" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp" >
-
-            <ImageView
-                android:id="@+id/four"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/menu_grey" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/four"
-                android:text="活动"
-                android:textSize="20sp" />
-        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

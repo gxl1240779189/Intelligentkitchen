@@ -11,9 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.example.myfragment.selectlistview;
 import com.example.other.StringtoURL;
 
@@ -36,14 +34,15 @@ public class searchjieguo extends FragmentActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.select_title);
-		foodname=getIntent().getExtras().getString("foodname");
+		foodname = getIntent().getExtras().getString("foodname");
 		Log.i("foodname", foodname);
-		listview_zuixing = new selectlistview("http://so.meishi.cc/?q="+StringtoURL.toUtf8String(foodname)+"&sort=time&page=",1);
+		listview_zuixing = new selectlistview("http://so.meishi.cc/?q="
+				+ StringtoURL.toUtf8String(foodname) + "&sort=time&page=", 1);
 		page1view = findViewById(R.id.page1);
 		page2view = findViewById(R.id.page2);
-		selecttitle=(TextView) findViewById(R.id.select_title);
+		selecttitle = (TextView) findViewById(R.id.select_title);
 		selecttitle.setText(foodname);
-		houtui=(ImageView) findViewById(R.id.houtui);
+		houtui = (ImageView) findViewById(R.id.houtui);
 		page1textview = (TextView) findViewById(R.id.select_page1);
 		page2textview = (TextView) findViewById(R.id.select_page2);
 		page1view.setOnClickListener(this);
@@ -70,7 +69,8 @@ public class searchjieguo extends FragmentActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		clearview();
-		FragmentTransaction fragmenttransaction=fragmentmanager.beginTransaction();
+		FragmentTransaction fragmenttransaction = fragmentmanager
+				.beginTransaction();
 		hideFragments(fragmenttransaction);
 		switch (v.getId()) {
 		case R.id.page1:
@@ -84,18 +84,20 @@ public class searchjieguo extends FragmentActivity implements OnClickListener {
 			if (listview_zuirei != null) {
 				fragmenttransaction.show(listview_zuirei);
 			} else {
-				listview_zuirei = new selectlistview("http://so.meishi.cc/?&q="+StringtoURL.toUtf8String(foodname)+"&sort=lastdotime&page=",1);
+				listview_zuirei = new selectlistview("http://so.meishi.cc/?&q="
+						+ StringtoURL.toUtf8String(foodname)
+						+ "&sort=lastdotime&page=", 1);
 				fragmenttransaction.add(R.id.select_content, listview_zuirei);
-			} 
+			}
 			break;
-			
+
 		case R.id.houtui:
 			finish();
 			break;
 		}
 		fragmenttransaction.commit();
 	}
-	
+
 	private void hideFragments(
 			android.support.v4.app.FragmentTransaction fragment) {
 		if (listview_zuirei != null) {

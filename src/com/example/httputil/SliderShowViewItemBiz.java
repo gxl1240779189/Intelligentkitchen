@@ -31,7 +31,7 @@ public class SliderShowViewItemBiz {
 		// Elements units = doc.getElementsByClass("slider");
 		Elements content = doc.getElementsByClass("zzw_item_2");
 		Elements links = content.get(0).getElementsByTag("li");
-//		Elements links_a = links.get(0).getElementsByTag("a");
+		// Elements links_a = links.get(0).getElementsByTag("a");
 		Log.i("msg", msg);
 		Log.i("content.size()", content.size() + "");
 		Log.i("links.size()", links.size() + "");
@@ -40,9 +40,10 @@ public class SliderShowViewItemBiz {
 			viewItem = new SliderShowViewItem();
 			Elements links_a = links.get(i).getElementsByTag("a");
 			String link = links_a.get(0).attr("href");
-			Element imagelink_ele = links_a.get(0).getElementsByTag("img").get(0);
+			Element imagelink_ele = links_a.get(0).getElementsByTag("img")
+					.get(0);
 			String imagelink = imagelink_ele.attr("src");
-			String foodname=links_a.get(0).attr("title");
+			String foodname = links_a.get(0).attr("title");
 			viewItem.setImgLink(imagelink);
 			viewItem.setLink(link);
 			viewItem.setFoodname(foodname);
@@ -53,12 +54,12 @@ public class SliderShowViewItemBiz {
 		}
 	}
 
-	public List<SliderShowViewItem> getNewsItems(String urlStr) throws CommonException,
-			IOException {
+	public List<SliderShowViewItem> getNewsItems(String urlStr)
+			throws CommonException, IOException {
 		ItemList.clear();
 		doGet(urlStr);
 		Log.i("hello", "123");
-		while (ItemList.size() ==0) {
+		while (ItemList.size() == 0) {
 			try {
 				Thread.sleep(2000);
 				Log.i("hello", "888");
@@ -90,7 +91,8 @@ public class SliderShowViewItemBiz {
 					conn.setDoOutput(true);
 					if (conn.getResponseCode() == 200) {
 						InputStream is = conn.getInputStream();
-						BufferedReader reader=new BufferedReader(new InputStreamReader(is, "UTF-8"));
+						BufferedReader reader = new BufferedReader(
+								new InputStreamReader(is, "UTF-8"));
 						int len = 0;
 						String line;
 						while ((line = reader.readLine()) != null) {

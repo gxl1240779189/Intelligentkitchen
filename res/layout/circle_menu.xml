@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9DCBB"
+	android:background="#FEFEFE"
     android:orientation="vertical" >
 
     <include layout="@layout/yaokong_head" />
@@ -17,11 +17,11 @@
         android:layout_height="match_parent"
         android:gravity="center" >
 
-        <com.example.paintcanvas.roundmenu
+        <com.example.ui.roundmenu
             android:id="@+id/id_menulayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/turnplate_mask_unlogin_normal" >
+            android:background="@drawable/yuanquan" >
 
             <RelativeLayout
                 android:id="@id/id_circle_menu_item_center"
@@ -32,15 +32,15 @@
                     android:layout_width="84.0dip"
                     android:layout_height="84.0dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/food" />
+                    android:background="@drawable/home_centre" />
 
                 <ImageView
                     android:layout_width="106.0dip"
                     android:layout_height="106.0dip"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/turnplate_mask_unlogin_normal" />
+                    android:background="@drawable/yuanquan" />
             </RelativeLayout>
-        </com.example.paintcanvas.roundmenu>
+        </com.example.ui.roundmenu>
     </LinearLayout>
 
 </LinearLayout>

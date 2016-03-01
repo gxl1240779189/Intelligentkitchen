@@ -3,8 +3,7 @@ package com.example.adapter;
 import java.util.List;
 
 import com.example.httputil.FoodsItem;
-import com.example.httputil.NewsItem;
-import com.example.intelligentkitchenn.R;
+import com.example.intelligentkitchen.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -24,9 +23,6 @@ public class FoodsItemAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private List<FoodsItem> mDatas;
 
-	/**
-	 * ʹ����github��Դ��ImageLoad��������ݼ���
-	 */
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private DisplayImageOptions options;
 
@@ -80,10 +76,13 @@ public class FoodsItemAdapter extends BaseAdapter {
 
 			holder.mContent = (TextView) convertView
 					.findViewById(R.id.food_content);
-			holder.mTitle = (TextView) convertView.findViewById(R.id.food_title);
-			holder.mImg = (ImageView) convertView.findViewById(R.id.food_newsImg);
-			holder.mPersonname= (TextView) convertView.findViewById(R.id.food_personname);
-			holder.mDate=(TextView) convertView.findViewById(R.id.food_date);
+			holder.mTitle = (TextView) convertView
+					.findViewById(R.id.food_title);
+			holder.mImg = (ImageView) convertView
+					.findViewById(R.id.food_newsImg);
+			holder.mPersonname = (TextView) convertView
+					.findViewById(R.id.food_personname);
+			holder.mDate = (TextView) convertView.findViewById(R.id.food_date);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -91,10 +90,9 @@ public class FoodsItemAdapter extends BaseAdapter {
 		FoodsItem foodsitem = mDatas.get(position);
 		holder.mTitle.setText(foodsitem.getTitle());
 		holder.mContent.setText(foodsitem.getContent());
-		holder.mPersonname.setText(foodsitem.getWriter());	
-		holder.mDate.setText(foodsitem.getDate());	
-	    imageLoader.displayImage(foodsitem.getImgLink(), holder.mImg,
-					options);
+		holder.mPersonname.setText(foodsitem.getWriter());
+		holder.mDate.setText(foodsitem.getDate());
+		imageLoader.displayImage(foodsitem.getImgLink(), holder.mImg, options);
 		return convertView;
 	}
 

@@ -214,12 +214,13 @@ public class FoodsItemBiz {
 					conn.setDoOutput(true);
 					if (conn.getResponseCode() == 200) {
 						InputStream is = conn.getInputStream();
-						BufferedReader reader=new BufferedReader(new InputStreamReader(is, "UTF-8"));
+						BufferedReader reader = new BufferedReader(
+								new InputStreamReader(is, "UTF-8"));
 						int len = 0;
-//						byte[] buf = new byte[60000];
-//						while ((len = is.read(buf)) != -1) {
-//							sb.append(new String(buf, 0, len, "UTF-8"));
-//						}
+						// byte[] buf = new byte[60000];
+						// while ((len = is.read(buf)) != -1) {
+						// sb.append(new String(buf, 0, len, "UTF-8"));
+						// }
 						String line;
 						while ((line = reader.readLine()) != null) {
 							sb.append(line);
@@ -231,14 +232,14 @@ public class FoodsItemBiz {
 						}
 						is.close();
 					} else {
-						throw new CommonException("·ÃÎÊÍøÂçÊ§°Ü00");
+						throw new CommonException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½00");
 					}
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					try {
-						throw new CommonException("·ÃÎÊÍøÂçÊ§°Ü11");
+						throw new CommonException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½11");
 					} catch (CommonException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -277,14 +278,14 @@ public class FoodsItemBiz {
 						jsoup_jiexi(sb.toString());
 						is.close();
 					} else {
-						throw new CommonException("·ÃÎÊÍøÂçÊ§°Ü00");
+						throw new CommonException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½00");
 					}
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					try {
-						throw new CommonException("·ÃÎÊÍøÂçÊ§°Ü11");
+						throw new CommonException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½11");
 					} catch (CommonException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
