@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="fill_parent"  
+    android:layout_height="150dp"  
+    android:orientation="vertical"  
+    android:paddingLeft="16dp"  
+    android:paddingRight="16dp"  
+    android:paddingTop="8dp"  
+    android:paddingBottom="8dp"  
+    >  
+    <TextView   
+        android:id="@+id/mTitle"  
+        android:layout_width="match_parent"  
+        android:layout_height="wrap_content"  
+        android:layout_marginBottom="8dp"  
+        android:textSize="18sp"  
+        android:textColor="#000000"  
+        android:text="韭菜炒蛋"/>  
+<LinearLayout   
+    android:layout_width="fill_parent"  
+    android:layout_height="wrap_content"  
+    android:orientation="horizontal"  
+    android:baselineAligned="true"  
+    >  
+<ImageView   
+        android:id="@+id/mImg"  
+        android:src="@drawable/ic_launcher"  
+        android:layout_width="100dp"  
+        android:layout_height="100dp"  
+        android:layout_marginRight="8dp"  
+        android:visibility="visible"/>  
+    <LinearLayout  
+        android:layout_width="0dp"  
+        android:layout_height="fill_parent"  
+        android:layout_gravity="center_vertical"  
+        android:layout_weight="1"  
+        android:gravity="center_vertical"  
+        android:orientation="vertical" >  
+          
+        <LinearLayout  
+            android:layout_width="fill_parent"  
+            android:layout_height="0dp"  
+            android:layout_weight="1"  
+            android:gravity="top" >  
+  
+            <TextView  
+                android:id="@+id/mContent"  
+                android:layout_width="fill_parent"  
+                android:layout_height="wrap_content"  
+                android:gravity="top"  
+                android:maxLines="2"
+                android:text="韭菜具健胃、提神、止汗固涩、补肾助阳、固精等功效，鸡蛋是人类最好的营养来源之一，鸡蛋中含有大量的维生素和矿物质及有高生物价值的蛋白质。韭菜与鸡蛋相炒，既营养又美味"  
+                android:textColor="#000000"  
+                android:textSize="14sp"  
+                 />  
+  
+              
+        </LinearLayout>  
+  
+       <LinearLayout  
+            android:layout_width="fill_parent"  
+            android:layout_height="0dp"  
+             android:layout_weight="1"  
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+             >  
+  
+           
+            <TextView  
+                android:id="@+id/tags"  
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"  
+                android:layout_weight="1" 
+                android:text="增强免疫力;家常菜;懒人食谱;粤菜;快手菜;炒;午餐"  
+                android:gravity="right"   
+                 android:paddingRight="10dp"        
+                android:textColor="#000000"  
+                 />  
+        </LinearLayout>  
+    </LinearLayout>  
+</LinearLayout>  
+           
+</LinearLayout>  

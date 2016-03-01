@@ -1,0 +1,160 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newsContentView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wangyibg"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/teachcontent_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/news_content_head" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/show_writer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/showfood"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/showtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="奶香椰蓉面包棒"
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/showdetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:text="奶香椰蓉面包棒发反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反反复复反复"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/juhe_cailiao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="食材明细"
+                android:textSize="25dp"
+               />
+
+            <View
+                android:id="@+id/show_xian"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="1.0px"
+                android:background="@android:color/darker_gray"
+                />
+            
+             <TextView
+                 android:layout_marginTop="5dp"
+                android:id="@+id/juhe_zhuliao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="主料"
+                android:textSize="22dp"
+               />
+              <View
+                android:id="@+id/show_xian"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="1.0px"
+                android:background="@android:color/darker_gray"
+                />
+              
+              <TextView
+                android:id="@+id/juhe_zhuliao_neirong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="主料内容"
+                android:textSize="20dp"
+               />
+              
+              <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/juhe_fuliao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="辅料"
+                android:textSize="22dp"
+               />
+              <View
+                android:id="@+id/show_xian"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="1.0px"
+                android:background="@android:color/darker_gray"
+                />
+              
+              <TextView
+                android:id="@+id/juhe_fuliao_neirong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="辅料内容"
+                android:textSize="20dp"
+               />
+              
+          
+            <TextView
+                android:id="@+id/show_content_tishi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="制作步骤"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/teachcontent__listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fuliao__listview"
+                android:divider="@color/black"
+                android:dividerHeight="1px" >
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/teachcontent__newsContentPro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/progressbar_large"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/teachcontent_reLoadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:src="@drawable/base_empty_view"
+        android:visibility="invisible" />
+
+</LinearLayout>
